@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(function($){
+
+	module(&quot;methods&quot;);
+
+	test(&quot;open&quot;, function(){
+		expect(2);
+	 
+		el = $(&quot;select&quot;).multiselect().multiselect(&quot;open&quot;);
+			ok( el.multiselect(&quot;isOpen&quot;), &quot;isOpen parameter true&quot; );
+			equal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/methods/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="(function($){
+
+	module(&quot;methods&quot;);
+
+	test(&quot;open&quot;, function(){
+		expect(2);
+	 
+		el = $(&quot;select&quot;).multiselect().multiselect(&quot;open&quot;);
+			ok( el.multiselect(&quot;isOpen&quot;), &quot;isOpen parameter true&quot; );
+			equal">
+<meta property="og:updated_time" content="2016-08-01T20:34:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="(function($){
+
+	module(&quot;methods&quot;);
+
+	test(&quot;open&quot;, function(){
+		expect(2);
+	 
+		el = $(&quot;select&quot;).multiselect().multiselect(&quot;open&quot;);
+			ok( el.multiselect(&quot;isOpen&quot;), &quot;isOpen parameter true&quot; );
+			equal">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jquery-ui-multiselect-widget-master/tests/unit/methods" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/methods/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.032Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        (function($){
+
+	module("methods");
+
+	test("open", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("open");
+			ok( el.multiselect("isOpen"), "isOpen parameter true" );
+			equals( menu().css("display"), "block", "Test display CSS property" );
+		el.multiselect("destroy");
+	});
+	
+	test("close", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("open").multiselect("close");
+			ok( !el.multiselect("isOpen"), "isOpen parameter false" );
+			equals( menu().css("display"), "none", "Test display CSS property" );
+		el.multiselect("destroy");
+	});
+	
+	test("enable", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("disable").multiselect("enable");
+			ok( button().is(":disabled") === false, "Button is enabled" );
+			ok( el.is(":disabled") === false, "Original select is enabled" );
+		el.multiselect("destroy");
+	});
+	
+	test("disable", function(){
+		expect(2);
+	 
+	 	// clone this one so the original is not affected
+		el = $("select").clone(true).appendTo(body).multiselect().multiselect("disable");
+			ok( button().is(":disabled"), 'Button is disabled');
+			ok( el.is(":disabled"), 'Original select is disabled');
+		el.multiselect("destroy").remove();
+	});
+	
+	test("enabling w/ pre-disabled tags (#216)", function(){
+		expect(5);
+	 
+	 	el = $('<select><option disabled value="foo">foo</option><option value="bar">bar</option>')
+			.appendTo(document.body)
+			.multiselect();
+
+		var boxes = menu().find("input")
+		var disabled = boxes.first();
+		var enabled = boxes.last();
+		var key = "ech-multiselect-disabled";
+
+		equals(disabled.is(":disabled"), true, "The first option is disabled");
+		el.multiselect("disable");
+		equals(disabled.data(key), undefined, "After disabling the widget, the pre-disabled option is not flagged to re-enable");
+		equals(enabled.data(key), true, "and the enabled option is flagged to be re-enable");
+		el.multiselect("enable");
+		equals(disabled.is(":disabled"), true, "After enabling, the first option is still disabled");
+		equals(disabled.data(key), undefined, "and the option no longer has the stored data flag");
+		el.multiselect("destroy").remove();
+	});
+	
+	test("widget", function(){
+		expect(1);
+	 
+		el = $("select").multiselect();
+			ok( menu().is("div.ui-multiselect-menu"), 'Widget is the menu element');
+		el.multiselect("destroy");
+	});
+	
+	test("getButton", function(){
+		expect(1);
+	 
+		el = $("select").multiselect();
+		var button = el.multiselect("getButton");
+			ok( button.is("button.ui-multiselect"), 'Button is the button element');
+		el.multiselect("destroy");
+	});
+	
+	test("checkAll", function(){
+		expect(1);
+	 
+		el = $("select").multiselect().multiselect("checkAll");
+		var inputs = menu().find("input");
+			ok( inputs.filter(":checked").length === inputs.length, 'All inputs selected on the widget?');
+		el.multiselect("destroy");
+	});
+
+	test("uncheckAll", function(){
+		expect(1);
+	 
+		el = $("select").multiselect().multiselect("checkAll").multiselect("uncheckAll");
+			ok( menu().find("input:checked").length === 0, 'All inputs unchecked on the widget?');
+		el.multiselect("destroy");
+	});
+
+	test("isOpen", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("open");
+			ok( el.multiselect("isOpen"), 'Testing isOpen method after calling open method');
+		el = $("select").multiselect("close");
+			ok( !el.multiselect("isOpen"), 'Testing isOpen method after calling close method');
+		el.multiselect("destroy");
+	});
+
+	test("destroy", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("destroy");
+			ok( !$(".ui-multiselect").length , 'button.ui-multiselect removed from the DOM');
+			ok( !el.data("multiselect") , 'no more multiselect obj attached to elem');
+	});
+
+	test("getChecked", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("checkAll");
+			equals( el.multiselect("getChecked").length, 9, 'number of checkboxes returned after checking all and calling getChecked');
+		el.multiselect("uncheckAll");
+			equals( el.multiselect("getChecked").length, 0, 'number of checkboxes returned after unchecking all and calling getChecked');
+		el.multiselect("destroy");
+	});
+    
+    test("getUnchecked", function(){
+		expect(2);
+	 
+		el = $("select").multiselect().multiselect("checkAll");
+			equals( el.multiselect("getUnchecked").length, 0, 'number of checkboxes returned after checking all and calling getUnchecked');
+		el.multiselect("uncheckAll");
+			equals( el.multiselect("getUnchecked").length, 9, 'number of checkboxes returned after unchecking all and calling getUnchecked');
+		el.multiselect("destroy");
+	});
+
+	test("refresh", function(){
+		expect(4);
+		
+		el = $("select").clone().appendTo(body).multiselect();
+		el.empty().html('<option value="foo">foo</option><option value="bar">bar</option>');
+		el.multiselect('refresh');
+		
+		var checkboxes, getCheckboxes = (function hai(){
+			checkboxes = menu().find('input[type="checkbox"]');
+			return hai;
+		})();
+		
+		equals( checkboxes.length, 2, "After clearing the select, adding 2 options, and refresh(), only 2 checkboxes exist");
+		equals( checkboxes.eq(0).val(), 'foo', 'first is foo' );
+		equals( checkboxes.eq(1).val(), 'bar', 'second is foo' );
+		
+		// add one more w/ append, just for safety's sake
+		el.append('<option value="baz">baz</option>');
+		el.multiselect('refresh');
+		getCheckboxes();
+		equals( checkboxes.eq(2).val(), 'baz', 'after an append() call, the third option is now' );
+		
+		el.multiselect("destroy").remove();
+	});
+
+	test("position", function() {
+    expect(2);
+
+    var left = "500px";
+
+    el = $("select").clone().appendTo(body).multiselect();
+
+    // move the button
+    button().css({ position: "absolute", left: left });
+
+    // sanity check the fact that the menu and button are out of sync
+    notEqual(menu().css("left"), left, "After moving the button, the menu remains in its old position");
+
+    // update the menu position
+    el.multiselect("position");
+
+    // make sure the new position is accurate
+    equals(menu().css("left"), left, "After calling position(), the menu has updated to the same left value as the button");
+
+    el.multiselect("destroy").remove();
+	});
+
+})(jQuery);
+</select>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/methods/" data-id="cit293itj001qawul6028qpdp" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/options/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/装逼界/">装逼界</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/装逼界/" style="font-size: 10px;">装逼界</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/style/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/widget-containers/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/formsubmission/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/form-reset/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/qunit/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

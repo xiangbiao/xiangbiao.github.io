@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-jquery-ui-multiselect-widget-master/tests/unit/filter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/filter/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.030Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        (function($){
+  var el, widget, button, input;
+
+  function getVisible() {
+    return widget.find(".ui-multiselect-checkboxes input:visible");
+  }
+
+  function getChecked() {
+    return el.multiselect("getChecked");
+  }
+
+  function getSelected() {
+    return el.children(":selected");
+  }
+
+  function searchFor(term) {
+    input.val(term).trigger("search");
+  }
+
+  function triggerClick() {
+    this.click();
+  }
+
+  function searchTest( term, expected, message ) {
+    message || (message = "searching for '#'");
+    message = message.replace("#", term);
+    searchFor(term);
+    equals( getVisible().length, expected, message );
+  }
+
+  module("filter widget - multiple select", {
+    setup: function() {
+      el = $('<select multiple>' +
+        '<option></option>' +
+        '<option value="foo">testffoooo</option>' +
+        '<option value="bar">testbbaarr</option>' +
+        '<option value=" baz ">testbbaazz</option>' +
+        '<option value="qux">testquxtest</option>' +
+        '<option value="10">ten</option>' +
+        '<option value="100">one hundred</option>' +
+        '<option value="5">five</option>' +
+        '<option>a test with word boundaries</option>' +
+        '<option>special regex !^$()//-|{}/: characters</option>' +
+        '');
+
+      el.appendTo(document.body);
+      el.multiselect();
+      el.multiselectfilter();
+      el.multiselect("open");
+
+      widget = el.multiselect("widget");
+      input = widget.find(".ui-multiselect-filter input");
+      button = el.next();
+    },
+
+    teardown: function() {
+      el.multiselectfilter("destroy");
+      el.multiselect("destroy");
+      el.remove();
+    }
+  });
+
+  test("defaults", function(){
+    expect(1);
+    ok( input.is(":visible"), "Filter input box is visible" );
+  });
+
+  test("filtering by node text", function(){
+    searchTest( "bbaa", 2);
+    searchTest( "bbaarr", 1);
+    searchTest( "  bbaa  ", 2, "searching for '#' with whitespace");
+    searchTest( " ", el.children().length, "searching for an empty string");
+    searchTest( "test", 5);
+    searchTest( "one hundred", 1);
+    searchTest( "with wor", 1);
+    searchTest( " with wor  ", 1);
+
+    $.each("$ ^ / : // { } | -".split(" "), function( i, char ){
+      searchTest( char, 1 );
+    });
+  });
+
+  test("filtering by node value", function(){
+    // searchTest( "100", 1);
+    // searchTest( "baz", 1);
+  });
+
+  test("filtering & checking", function(){
+    searchFor("ba");
+
+    getVisible().each(triggerClick);
+    equals(getChecked().length, 2, "Two checkboxes are selected");
+    equals(getSelected().length, 2, "Two option tags are selected");
+
+    getVisible().each(triggerClick);
+    equals(getChecked().length, 0, "After clicking again, no checkboxes are selected");
+    equals(getSelected().length, 0, "After clicking again, no tags are selected");
+  });
+
+  test("checkAll / uncheckAll", function(){
+    searchFor("ba");
+
+    el.multiselect("checkAll");
+    equals(getChecked().length, 2, "checkAll: two checkboxes are selected");
+    equals(getSelected().length, 2, "checkAll: two option tags are selected");
+
+    el.multiselect("uncheckAll");
+    equals(getChecked().length, 0, "uncheckAll: no checkboxes are selected");
+    equals(getSelected().length, 0, "uncheckAll: no option tags are selected");
+  });
+
+  test("combination of filtering/methods/click events", function(){
+    searchFor("ba");
+
+    getVisible().first().each(triggerClick);
+    equals(getChecked().length, 1, "selecting 1 of multiple results (checked)");
+    equals(getSelected().length, 1, "selecting 1 of multiple results (selected)");
+
+    searchFor(" ");
+    equals(getChecked().length, 1, "clearing search, only 1 is still selected");
+    el.multiselect("uncheckAll");
+    equals(getChecked().length, 0, "uncheckAll, nothing is selected (checked)");
+    equals(getSelected().length, 0, "uncheckedAll, nothing is selected (selected)");
+
+    searchFor("one hundred")
+    el.multiselect("checkAll");
+    equals(getChecked().length, 1, "checkAll on one matching result (checked)");
+    equals(getSelected().length, 1, "checkAll on one matching result (selected)");
+
+    searchFor("foo");
+    el.multiselect("checkAll");
+    equals(getChecked().length, 2, "checkAll on one matching result (checked)");
+    equals(getSelected().length, 2, "checkAll on one matching result (selected)");
+  });
+})(jQuery);
+</select>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/filter/" data-id="cit293itj001lawulkcev7c6u" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/tests/unit/events" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/events/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.029Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        (function($){
+
+	module("events");
+
+	test("multiselectopen", function(){
+		expect(27);
+	 
+	 	// inject widget
+		el = $("<select multiple><option value="foo">foo</option></select>").appendTo(body);
+		el.multiselect({
+			open: function(e,ui){
+				ok( true, 'option: multiselect("open") fires open callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectopen', 'option: event type in callback');
+				equals(menu().css("display"), 'block', 'menu display css property equals block'); 
+				same(ui, {}, 'option: ui hash in callback');
+			}
+		})
+		.bind("multiselectopen", function(e,ui){
+			ok(true, 'event: multiselect("open") fires multiselectopen event');
+			equals(this, el[0], 'event: context of event');
+			same(ui, {}, 'event: ui hash');
+		});
+		
+		// now try to open it..
+		el.multiselect("open")
+		
+		// make sure the width of the menu and button are equivalent
+		equals( button().outerWidth(), menu().outerWidth(), 'button and menu widths are equivalent');
+		
+		// close
+		el.multiselect("close");
+		
+		// make sure a click event on the button opens the menu as well.
+		button().trigger("click");
+		el.multiselect("close");
+		
+		// make sure a click event on a span inside the button opens the menu as well.
+		button().find("span:first").trigger("click");
+		
+		// reset for next test
+		el.multiselect("destroy").remove();
+		
+		// now try returning false prevent opening
+		el = $("<select></select>")
+			.appendTo(body)
+			.multiselect()
+			.bind("multiselectbeforeopen", function(){
+				ok( true, "event: binding multiselectbeforeopen to return false (prevent from opening)" );
+				return false;
+			})
+			.multiselect("open");
+		
+		ok( !el.multiselect("isOpen"), "multiselect is not open after multiselect('open')" );
+		el.multiselect("destroy").remove();
+	});
+
+	test("multiselectclose", function(){
+		expect(25);
+	 
+	 	// inject widget
+		el = $("<select multiple><option>foo</option></select>").appendTo(body);
+		el.multiselect({
+			close: function(e,ui){
+				ok( true, 'option: multiselect("close") fires close callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectclose', 'option: event type in callback');
+				equals(menu().css("display"), 'none', 'menu display css property equals none'); 
+				same(ui, {}, 'option: ui hash');
+			}
+		})
+		.bind("multiselectclose", function(e,ui){
+			ok(true, 'multiselect("close") fires multiselectclose event');
+			equals(this, el[0], 'event: context of event');
+			same(ui, {}, 'event: ui hash');
+		})
+		.multiselect("open")
+		.multiselect("close")
+		.multiselect("open");
+		
+		// make sure a click event on the button closes the menu as well.
+		button().click();
+		el.multiselect("open");
+		
+		// make sure a click event on a span inside the button closes the menu as well.
+		button().find("span:first").click();
+
+		// make sure that the menu is actually closed.  see issue #68
+		ok( el.multiselect('isOpen') === false, 'menu is indeed closed' );
+
+		el.multiselect("destroy").remove();
+	});
+	
+	test("multiselectbeforeclose", function(){
+		expect(8);
+	 
+	 	// inject widget
+		el = $("<select multiple></select>").appendTo(body);
+		el.multiselect({
+			beforeclose: function(e,ui){
+				ok( true, 'option: multiselect("beforeclose") fires close callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectbeforeclose', 'option: event type in callback');
+				same(ui, {}, 'option: ui hash');
+			}
+		})
+		.bind("multiselectbeforeclose", function(e,ui){
+			ok(true, 'multiselect("beforeclose") fires multiselectclose event');
+			equals(this, el[0], 'event: context of event');
+			same(ui, {}, 'event: ui hash');
+		})
+		.multiselect("open")
+		.multiselect("close");
+		
+		el.multiselect("destroy").remove();
+		
+		// test 'return false' functionality
+		el = $("<select multiple></select>").appendTo(body);
+		el.multiselect({
+			beforeclose: function(){
+				return false;
+			}
+		});
+		
+		el.multiselect('open').multiselect('close');
+		ok( menu().is(':visible') && el.multiselect("isOpen"), "returning false inside callback prevents menu from closing" );
+		el.multiselect("destroy").remove();
+	});
+	
+	test("multiselectclick", function(){
+		expect(28);
+	 
+	 	var times = 0;
+
+	 	// inject widget
+		el = $("<select multiple><option value="1">Option 1</option><option value="2">Option 2</option></select>")
+			.appendTo(body);
+		
+		el.multiselect({
+			click: function(e,ui){
+				ok(true, 'option: triggering the click event on the second checkbox fires the click callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectclick', 'option: event type in callback');
+				equals(ui.value, "2", "option: ui.value equals");
+				equals(ui.text, "Option 2", "option: ui.text equals");
+
+				if(times === 0) {
+          equals(ui.checked, true, "option: ui.checked equals");
+				} else if(times === 1) {
+          equals(ui.checked, false, "option: ui.checked equals");
+				}
+			}
+		})
+		.bind("multiselectclick", function(e,ui){
+			ok(true, 'event: triggering the click event on the second checkbox triggers multiselectclick');
+			equals(this, el[0], 'event: context of event');
+			equals(ui.value, "2", "event: ui.value equals");
+			equals(ui.text, "Option 2", "event: ui.text equals");
+
+      if(times === 0) {
+        equals(ui.checked, true, "option: ui.checked equals");
+      } else if(times === 1) {
+        equals(ui.checked, false, "option: ui.checked equals");
+      }
+		})
+		.bind("change", function(e){
+			if(++times === 1){
+				equals(el.val().join(), "2", "event: select element val() within the change event is correct" );
+			} else {
+				equals(el.val(), null, "event: select element val() within the change event is correct" );
+			}
+
+			ok(true, "event: the select's change event fires");
+		})
+		.multiselect("open");
+		
+		// trigger a click event on the input
+		var lastInput = menu().find("input").last();
+		lastInput[0].click();
+
+		// trigger once more.
+		lastInput[0].click();
+
+		// make sure it has focus
+		equals(true, lastInput.is(":focus"), "The input has focus");
+
+		// make sure menu isn't closed automatically
+		equals( true, el.multiselect('isOpen'), 'menu stays open' );
+
+		el.multiselect("destroy").remove();
+	});
+
+	test("multiselectcheckall", function(){
+		expect(10);
+	 
+	 	// inject widget
+		el = $('<select multiple><option value="1">Option 1</option><option value="2">Option 2</option></select>').appendTo(body);
+
+		el.multiselect({
+			checkAll: function(e,ui){
+				ok( true, 'option: multiselect("checkAll") fires checkall callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectcheckall', 'option: event type in callback');
+				same(ui, {}, 'option: ui hash in callback');
+			}
+		})
+		.bind("multiselectcheckall", function(e,ui){
+			ok( true, 'event: multiselect("checkall") fires multiselectcheckall event' );
+			equals(this, el[0], 'event: context of event');
+			same(ui, {}, 'event: ui hash');
+		})
+		.bind("change", function(){
+			ok(true, "event: the select's change event fires");
+			equals( el.val().join(), "1,2", "event: select element val() within the change event is correct" );
+		})
+		.multiselect("open")
+		.multiselect("checkAll");
+
+		equals(menu().find("input").first().is(":focus"), true, "The first input has focus");
+		
+		el.multiselect("destroy").remove();
+	});
+	
+	test("multiselectuncheckall", function(){
+		expect(10);
+	 
+	 	// inject widget
+		el = $('<select multiple><option value="1">Option 1</option><option value="2">Option 2</option></select>').appendTo(body);
+
+		el.multiselect({
+			uncheckAll: function(e,ui){
+				ok( true, 'option: multiselect("uncheckAll") fires uncheckall callback' );
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectuncheckall', 'option: event type in callback');
+				same(ui, {}, 'option: ui hash in callback');
+			}
+		})
+		.bind("multiselectuncheckall", function(e,ui){
+			ok( true, 'event: multiselect("uncheckall") fires multiselectuncheckall event' );
+			equals(this, el[0], 'event: context of event');
+			same(ui, {}, 'event: ui hash');
+		})
+		.bind("change", function(){
+			ok(true, "event: the select's change event fires");
+			equals( el.val(), null, "event: select element val() within the change event is correct" );
+		})
+		.multiselect("open")
+		.multiselect("uncheckAll");
+		
+		equals(menu().find("input").first().is(":focus"), true, "The first input has focus");
+
+		el.multiselect("destroy").remove();
+	});
+	
+	
+	test("multiselectbeforeoptgrouptoggle", function(){
+		expect(10);
+
+		// inject widget
+		el = $('<select multiple><optgroup label="Set One"><option value="1">Option 1</option><option value="2">Option 2</option></optgroup></select>')
+          .appendTo(body);
+
+		el.bind("change", function(){
+			ok(true, "the select's change event fires");
+		})
+		.multiselect({
+			beforeoptgrouptoggle: function(e,ui){
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectbeforeoptgrouptoggle', 'option: event type in callback');
+				equals(ui.label, "Set One", 'option: ui.label equals');
+				equals(ui.inputs.length, 2, 'option: number of inputs in the ui.inputs key');
+			}
+		})
+		.bind("multiselectbeforeoptgrouptoggle", function(e,ui){
+			ok( true, 'option: multiselect("uncheckall") fires multiselectuncheckall event' );
+			equals(this, el[0], 'event: context of event');
+			equals(ui.label, "Set One", 'event: ui.label equals');
+			equals(ui.inputs.length, 2, 'event: number of inputs in the ui.inputs key');
+		})
+		.multiselect("open");
+		
+		menu().find("li.ui-multiselect-optgroup-label a").click();
+		
+		el.multiselect("destroy").remove();
+		el = el.clone();
+		
+		// test return false preventing checkboxes from activating
+		el.bind("change", function(){
+			ok( true ); // should not fire
+		}).multiselect({
+			beforeoptgrouptoggle: function(){
+				return false;
+			},
+			// if this fires the expected count will be off.  just a redundant way of checking that return false worked
+            optgrouptoggle: function(){
+                ok( true );
+            }
+		}).appendTo( body );
+
+        var label = menu().find("li.ui-multiselect-optgroup-label a").click();
+        equals( menu().find(":input:checked").length, 0, "when returning false inside the optgrouptoggle handler, no checkboxes are checked" );
+        el.multiselect("destroy").remove();
+	});
+
+	test("multiselectoptgrouptoggle", function(){
+		expect(12);
+		
+		// inject widget
+		el = $('<select multiple><optgroup label="Set One"><option value="1">Option 1</option><option value="2">Option 2</option></optgroup></select>').appendTo(body);
+
+		el.multiselect({
+			optgrouptoggle: function(e,ui){
+				equals(this, el[0], "option: context of callback");
+				equals(e.type, 'multiselectoptgrouptoggle', 'option: event type in callback');
+				equals(ui.label, "Set One", 'option: ui.label equals');
+				equals(ui.inputs.length, 2, 'option: number of inputs in the ui.inputs key');
+				equals(ui.checked, true, 'option: ui.checked equals true');
+			}
+		})
+		.bind("multiselectoptgrouptoggle", function(e,ui){
+			ok( true, 'option: multiselect("uncheckall") fires multiselectuncheckall event' );
+			equals(this, el[0], 'event: context of event');
+			equals(ui.label, "Set One", 'event: ui.label equals');
+			equals(ui.inputs.length, 2, 'event: number of inputs in the ui.inputs key');
+			equals(ui.checked, true, 'event: ui.checked equals true');
+		})
+		.multiselect("open");
+		
+		// trigger native click event on optgroup
+		menu().find("li.ui-multiselect-optgroup-label a").click();
+		equals(menu().find(":input:checked").length, 2, "both checkboxes are actually checked" );
+
+		equals(menu().find("input").first().is(":focus"), true, "The first input has focus");
+		
+		el.multiselect("destroy").remove();
+	});
+
+})(jQuery);
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/events/" data-id="cit293itj001nawul1p941ovm" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/tests/unit/core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/core/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.028Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        var el;
+var body = document.body;
+
+function button(){
+	return el.next();
+}
+
+function menu(){
+	return el.multiselect("widget");
+}
+
+function header(){
+	return menu().find('.ui-multiselect-header');
+}
+
+QUnit.done = function(){
+	$("select").hide();
+};
+
+(function($){
+	
+	module("core");
+	
+	test("init", function(){
+		expect(6);
+	 
+		el = $("select").multiselect(), $header = header();
+		ok( $header.find('a.ui-multiselect-all').css('display') !== 'none', 'select all is visible' );
+		ok( $header.find('a.ui-multiselect-none').css('display') !== 'none', 'select none is visible' );
+		ok( $header.find('a.ui-multiselect-close').css('display') !== 'none', 'close link is visible' );
+		ok( menu().is(':hidden'), 'menu is hidden');
+		ok( el.is(":hidden"), 'the original select is hidden');
+		ok( el.attr('tabIndex') == 2, 'button inherited the correct tab index');
+		el.multiselect("destroy");
+	});
+	
+	test("form submission", function(){
+		expect(3);
+		
+		var form = $('<form></form>').appendTo(body),
+			data;
+		
+		el = $('<select id="test" name="test" multiple="multiple"><option value="foo" selected="selected">foo</option><option value="bar">bar</option></select>')
+			.appendTo(form)
+			.multiselect()
+			.multiselect("checkAll");
+			
+		data = form.serialize();
+		equals( data, 'test=foo&test=bar', 'after checking all and serializing the form, the correct keys were serialized');
+		
+		el.multiselect("uncheckAll");
+		data = form.serialize();
+		equals( data.length, 0, 'after unchecking all and serializing the form, nothing was serialized');
+		
+		// re-check all and destroy, exposing original select
+		el.multiselect("checkAll").multiselect("destroy");
+		data = form.serialize();
+		equals( data, 'test=foo&test=bar', 'after checking all, destroying the widget, and serializing the form, the correct keys were serialized');
+		
+		form.remove();
+	});
+
+	test("form submission, optgroups", function(){
+		expect(4);
+		
+		var form = $('<form></form>').appendTo(body),
+			data;
+		
+		el = $('<select id="test" name="test" multiple="multiple"><optgroup label="foo"><option value="foo">foo</option><option value="bar">bar</option></optgroup><optgroup label="bar"><option value="baz">baz</option><option value="bax">bax</option></optgroup></select>')
+			.appendTo(form)
+			.multiselect()
+			.multiselect("checkAll");
+			
+		data = form.serialize();
+		equals( data, 'test=foo&test=bar&test=baz&test=bax', 'after checking all and serializing the form, the correct keys were serialized');
+		
+		el.multiselect("uncheckAll");
+		data = form.serialize();
+		equals( data.length, 0, 'after unchecking all and serializing the form, nothing was serialized');
+		
+		// re-check all and destroy, exposing original select
+		el.multiselect("checkAll").multiselect("destroy");
+		data = form.serialize();
+		equals( data, 'test=foo&test=bar&test=baz&test=bax', 'after checking all, destroying the widget, and serializing the form, the correct keys were serialized');
+		
+		// reset option tags
+		el.find("option").each(function(){
+			this.selected = false;
+		});
+		
+		// test checking one option in both optgroups
+		el.multiselect();
+		
+		// finds the first input in each optgroup (assumes 2 options per optgroup)
+		el.multiselect("widget").find('.ui-multiselect-checkboxes li:not(.ui-multiselect-optgroup-label) input:even').each(function( i ){
+			this.click();
+		});
+		
+		data = form.serialize();
+		equals( data, 'test=foo&test=baz', 'after manually checking one input in each group, the correct two are serialized');
+		
+		el.multiselect('destroy');
+		form.remove();
+	});
+	
+	test("form submission, single select", function(){
+		expect(7);
+		
+		var form = $('<form></form>').appendTo("body"),
+			radios, data;
+		
+		el = $('<select id="test" name="test" multiple="multiple"><option value="foo">foo</option><option value="bar">bar</option><option value="baz">baz</option></select>')
+			.appendTo(form)
+			.multiselect({ multiple: false });
+		
+		// select multiple radios to ensure that, in the underlying select, only one
+		// will remain selected
+		radios = menu().find(":radio");
+		radios[0].click();
+		radios[2].click();
+		radios[1].click();
+		
+		data = form.serialize();
+		equals( data, 'test=bar', 'the form serializes correctly after clicking on multiple radio buttons');
+		equals( radios.filter(":checked").length, 1, 'Only one radio button is selected');
+		
+		// uncheckAll method
+		el.multiselect("uncheckAll");
+		data = form.serialize();
+		equals( data.length, 0, 'After unchecking all, nothing was serialized');
+		equals( radios.filter(":checked").length, 0, 'No radio buttons are selected');
+		
+		// checkAll method
+		el.multiselect("checkAll");
+		data = form.serialize();
+		equals( el.multiselect("getChecked").length, 1, 'After checkAll, only one radio is selected');
+		equals( radios.filter(":checked").length, 1, 'One radio is selected');
+		
+		// expose original
+		el.multiselect("destroy");
+		data = form.serialize();
+		equals( data, 'test=foo&test=bar&test=baz', 'after destroying the widget and serializing the form, the correct key was serialized: ' + data);
+		
+		form.remove();
+	});
+	
+	asyncTest("form reset, nothing pre-selected", function(){
+		expect(2);
+		
+		var form = $('<form></form>').appendTo(body),
+			noneSelected = 'Please check something';
+		
+		el = $('<select name="test" multiple="multiple"><option value="foo">foo</option><option value="bar">bar</option></select>')
+			.appendTo(form)
+			.multiselect({ noneSelectedText: noneSelected })
+			.multiselect("checkAll");
+			
+		// trigger reset
+		form.trigger("reset");
+		
+		setTimeout(function(){
+			equals( menu().find(":checked").length, 0, "no checked checkboxes" );
+			equals( button().text(), noneSelected, "none selected text");
+			el.multiselect('destroy');
+			form.remove();
+			start();
+		}, 10);
+	});
+	
+	asyncTest("form reset, pre-selected options", function(){
+		expect(2);
+		
+		var form = $('<form></form>').appendTo(body);
+		
+		el = $('<select name="test" multiple="multiple"><option value="foo" selected="selected">foo</option><option value="bar" selected="selected">bar</option></select>')
+			.appendTo(form)
+			.multiselect({ selectedText: '# of # selected' })
+			.multiselect("uncheckAll");
+			
+		// trigger reset
+		form.trigger("reset");
+		
+		setTimeout(function(){
+			equals( menu().find(":checked").length, 2, "two checked checkboxes" );
+			equals( button().text(), "2 of 2 selected", "selected text" );
+			el.multiselect('destroy');
+			form.remove();
+			start();
+		}, 10);
+	});
+	
+})(jQuery);
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/core/" data-id="cit293itj001kawul5s1815yf" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/src/jquery.multiselect.min" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.min/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.024Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, boss:true, undef:true, curly:true, browser:true, jquery:true */
+/*
+ * jQuery MultiSelect UI Widget 1.16pre
+ * Copyright (c) 2012 Eric Hynds
+ *
+ * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
+ *
+ * Depends:
+ *   - jQuery 1.4.2+
+ *   - jQuery UI 1.8 widget factory
+ *
+ * Optional:
+ *   - jQuery UI effects
+ *   - jQuery UI position utility
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ *
+ */
+(function($,undefined){var multiselectID=0;var $doc=$(document);$.widget("ech.multiselect",{options:{header:true,height:175,minWidth:225,classes:"",checkAllText:"Check all",uncheckAllText:"Uncheck all",noneSelectedText:"Select options",selectedText:"# selected",selectedList:0,show:null,hide:null,autoOpen:false,multiple:true,position:{},appendTo:"body",menuWidth:null},_create:function(){var el=this.element;var o=this.options;this.speed=$.fx.speeds._default;this._isOpen=false;this._namespaceID=this.eventNamespace||"multiselect"+multiselectID;var button=(this.button=$('<button type="button"><span class="ui-icon ui-icon-triangle-1-s"></span></button>')).addClass("ui-multiselect ui-widget ui-state-default ui-corner-all").addClass(o.classes).attr({title:el.attr("title"),tabIndex:el.attr("tabIndex"),id:el.attr("id")?el.attr("id")+"_ms":null}).prop("aria-haspopup",true).insertAfter(el),buttonlabel=(this.buttonlabel=$("<span>")).html(o.noneSelectedText).appendTo(button),menu=(this.menu=$("<div>")).addClass("ui-multiselect-menu ui-widget ui-widget-content ui-corner-all").addClass(o.classes).appendTo($(o.appendTo)),header=(this.header=$("<div>")).addClass("ui-widget-header ui-corner-all ui-multiselect-header ui-helper-clearfix").appendTo(menu),headerLinkContainer=(this.headerLinkContainer=$("<ul>")).addClass("ui-helper-reset").html(function(){if(o.header===true){return'<li><a class="ui-multiselect-all" href="#"><span class="ui-icon ui-icon-check"></span><span>'+o.checkAllText+'</span></a></li><li><a class="ui-multiselect-none" href="#"><span class="ui-icon ui-icon-closethick"></span><span>'+o.uncheckAllText+"</span></a></li>"}else if(typeof o.header==="string"){return"<li>"+o.header+"</li>"}else{return""}}).append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></li>').appendTo(header),checkboxContainer=(this.checkboxContainer=$("<ul>")).addClass("ui-multiselect-checkboxes ui-helper-reset").appendTo(menu);this._bindEvents();this.refresh(true);if(!o.multiple){menu.addClass("ui-multiselect-single")}multiselectID++;el.hide()},_init:function(){if(this.options.header===false){this.header.hide()}if(!this.options.multiple){this.headerLinkContainer.find(".ui-multiselect-all, .ui-multiselect-none").hide()}if(this.options.autoOpen){this.open()}if(this.element.is(":disabled")){this.disable()}},refresh:function(init){var el=this.element;var o=this.options;var menu=this.menu;var checkboxContainer=this.checkboxContainer;var optgroups=[];var html="";var id=el.attr("id")||multiselectID++;if(this.options.header){if(!this.options.multiple){this.headerLinkContainer.find(".ui-multiselect-all, .ui-multiselect-none").hide()}else{this.headerLinkContainer.find(".ui-multiselect-all, .ui-multiselect-none").show()}}el.find("option").each(function(i){var $this=$(this);var parent=this.parentNode;var description=this.innerHTML;var title=this.title===""?this.textContent:this.title;var value=this.value;var inputID="ui-multiselect-"+multiselectID+"-"+(this.id||id+"-option-"+i);var isDisabled=this.disabled;var isSelected=this.selected;var labelClasses=["ui-corner-all"];var liClasses=(isDisabled?"ui-multiselect-disabled ":" ")+this.className;var optLabel;if(parent.tagName==="OPTGROUP"){optLabel=parent.getAttribute("label");if($.inArray(optLabel,optgroups)===-1){var optLabelEscaped=optLabel.replace(/&/g,"&amp;").replace(/>/g,"&gt;").replace(/<a href="#">'+optLabelEscaped+"</a>";optgroups.push(optLabel)}}if(isDisabled){labelClasses.push("ui-state-disabled")}if(isSelected&&!o.multiple){labelClasses.push("ui-state-active")}html+='<li class="'+liClasses+'">';html+='<label for="'+inputID+'" title="'+title+'" class="'+labelClasses.join(" ")+'"="">';html+='<input id="'+inputID+'" name="multiselect_'+id+'" type="'+(o.multiple?" checkbox":"radio")+'"="" value="'+value+'" title="'+title+'" ';if(isselected){html+=" checked="checked"" ;html+=" aria-selected="true"" }if(isdisabled){html+=" disabled="disabled"" }html+=" /><span>" +description+"<="" span=""></label></li>"});checkboxContainer.html(html);this.labels=menu.find("label");this.inputs=this.labels.children("input");this._setButtonWidth();this._setMenuWidth();this.button[0].defaultValue=this.update();if(!init){this._trigger("refresh")}},update:function(){var o=this.options;var $inputs=this.inputs;var $checked=$inputs.filter(":checked");var numChecked=$checked.length;var value;if(numChecked===0){value=o.noneSelectedText}else{if($.isFunction(o.selectedText)){value=o.selectedText.call(this,numChecked,$inputs.length,$checked.get())}else if(/\d/.test(o.selectedList)&&o.selectedList>0&&numChecked<=o.selectedlist){value=$checked.map(function(){return $(this).next().text()}).get().join(",="" ")}else{value="o.selectedText.replace("#",numChecked).replace("#",$inputs.length)}}this._setButtonValue(value);return" value},_setbuttonvalue:function(value){this.buttonlabel.text(value)},_bindevents:function(){var="" self="this;var" button="this.button;function" clickhandler(){self[self._isopen?"close":"open"]();return="" false}button.find("span").bind("click.multiselect",clickhandler);button.bind({click:clickhandler,keypress:function(e){switch(e.which){case="" 27:case="" 38:case="" 37:self.close();break;case="" 39:case="" 40:self.open();break}},mouseenter:function(){if(!button.hasclass("ui-state-disabled")){$(this).addclass("ui-state-hover")}},mouseleave:function(){$(this).removeclass("ui-state-hover")},focus:function(){if(!button.hasclass("ui-state-disabled")){$(this).addclass("ui-state-focus")}},blur:function(){$(this).removeclass("ui-state-focus")}});this.header.delegate("a","click.multiselect",function(e){if($(this).hasclass("ui-multiselect-close")){self.close()}else{self[$(this).hasclass("ui-multiselect-all")?"checkall":"uncheckall"]()}e.preventdefault()});this.menu.delegate("li.ui-multiselect-optgroup-label="" a","click.multiselect",function(e){e.preventdefault();var="" $this="$(this);var" $inputs="$this.parent().nextUntil("li.ui-multiselect-optgroup-label").find("input:visible:not(:disabled)");var" nodes="$inputs.get();var" label="$this.parent().text();if(self._trigger("beforeoptgrouptoggle",e,{inputs:nodes,label:label})===false){return}self._toggleChecked($inputs.filter(":checked").length!==$inputs.length,$inputs);self._trigger("optgrouptoggle",e,{inputs:nodes,label:label,checked:nodes[0].checked})}).delegate("label","mouseenter.multiselect",function(){if(!$(this).hasClass("ui-state-disabled")){self.labels.removeClass("ui-state-hover");$(this).addClass("ui-state-hover").find("input").focus()}}).delegate("label","keydown.multiselect",function(e){e.preventDefault();switch(e.which){case" 9:case="" 27:self.close();break;case="" 40:case="" 37:case="" 39:self._traverse(e.which,this);break;case="" 13:$(this).find("input")[0].click();break}}).delegate('input[type="checkbox" ],="" input[type="radio" ]',"click.multiselect",function(e){var="" val="this.value;var" checked="this.checked;var" tags="self.element.find("option");if(this.disabled||self._trigger("click",e,{value:val,text:this.title,checked:checked})===false){e.preventDefault();return}$this.focus();$this.prop("aria-selected",checked);tags.each(function(){if(this.value===val){this.selected=checked}else" if(!self.options.multiple){this.selected="false}});if(!self.options.multiple){self.labels.removeClass("ui-state-active");$this.closest("label").toggleClass("ui-state-active",checked);self.close()}self.element.trigger("change");setTimeout($.proxy(self.update,self),10)});$doc.bind("mousedown."+self._namespaceID,function(event){var" target="event.target;if(self._isOpen&&target!==self.button[0]&&target!==self.menu[0]&&!$.contains(self.menu[0],target)&&!$.contains(self.button[0],target)){self.close()}});$(this.element[0].form).bind("reset."+this._namespaceID,function(){setTimeout($.proxy(self.refresh,self),10)})},_setButtonWidth:function(){var" width="this.element.outerWidth();var" o="this.options;if(/\d/.test(o.minWidth)&&width<o.minWidth){width=o.minWidth}this.button.outerWidth(width)},_setMenuWidth:function(){var" m="this.menu;var" $start="$(start);var" movetolast="which===38||which===37;var" $next="$start.parent()[moveToLast?"prevAll":"nextAll"]("li:not(.ui-multiselect-disabled," .ui-multiselect-optgroup-label)").first();if(!$next.length){var="" $container="this.menu.find("ul").last();this.menu.find("label")[moveToLast?"last":"first"]().trigger("mouseover");$container.scrollTop(moveToLast?$container.height():0)}else{$next.find("label").trigger("mouseover")}},_toggleState:function(prop,flag){return" function(){if(!this.disabled){this[prop]="flag}if(flag){this.setAttribute("aria-selected",true)}else{this.removeAttribute("aria-selected")}}},_toggleChecked:function(flag,group){var" values="$inputs.map(function(){return" this.value}).get();this.element.find("option").each(function(){if(!this.disabled&&$.inarray(this.value,values)="">-1){self._toggleState("selected",flag).call(this)}});if($inputs.length){this.element.trigger("change")}},_toggleDisabled:function(flag){this.button.prop({disabled:flag,"aria-disabled":flag})[flag?"addClass":"removeClass"]("ui-state-disabled");var inputs=this.menu.find("input");var key="ech-multiselect-disabled";if(flag){inputs=inputs.filter(":enabled").data(key,true)}else{inputs=inputs.filter(function(){return $.data(this,key)===true}).removeData(key)}inputs.prop({disabled:flag,"arial-disabled":flag}).parent()[flag?"addClass":"removeClass"]("ui-state-disabled");this.element.prop({disabled:flag,"aria-disabled":flag})},open:function(e){var self=this;var button=this.button;var menu=this.menu;var speed=this.speed;var o=this.options;var args=[];if(this._trigger("beforeopen")===false||button.hasClass("ui-state-disabled")||this._isOpen){return}var $container=menu.find("ul").last();var effect=o.show;if($.isArray(o.show)){effect=o.show[0];speed=o.show[1]||self.speed}if(effect){args=[effect,speed]}$container.scrollTop(0).height(o.height);this.position();$.fn.show.apply(menu,args);this.labels.filter(":not(.ui-state-disabled)").eq(0).trigger("mouseover").trigger("mouseenter").find("input").trigger("focus");button.addClass("ui-state-active");this._isOpen=true;this._trigger("open")},close:function(){if(this._trigger("beforeclose")===false){return}var o=this.options;var effect=o.hide;var speed=this.speed;var args=[];if($.isArray(o.hide)){effect=o.hide[0];speed=o.hide[1]||this.speed}if(effect){args=[effect,speed]}$.fn.hide.apply(this.menu,args);this.button.removeClass("ui-state-active").trigger("blur").trigger("mouseleave");this._isOpen=false;this._trigger("close")},enable:function(){this._toggleDisabled(false)},disable:function(){this._toggleDisabled(true)},checkAll:function(e){this._toggleChecked(true);this._trigger("checkAll")},uncheckAll:function(){this._toggleChecked(false);this._trigger("uncheckAll")},getChecked:function(){return this.menu.find("input").filter(":checked")},getUnchecked:function(){return this.menu.find("input").not(":checked")},destroy:function(){$.Widget.prototype.destroy.call(this);$doc.unbind(this._namespaceID);$(this.element[0].form).unbind(this._namespaceID);this.button.remove();this.menu.remove();this.element.show();return this},isOpen:function(){return this._isOpen},widget:function(){return this.menu},getButton:function(){return this.button},position:function(){var o=this.options;if($.ui.position&&!$.isEmptyObject(o.position)){o.position.of=o.position.of||this.button;this.menu.show().position(o.position).hide()}else{var pos=this.button.offset();this.menu.css({top:pos.top+this.button.outerHeight(),left:pos.left})}},_setOption:function(key,value){var menu=this.menu;switch(key){case"header":menu.find("div.ui-multiselect-header")[value?"show":"hide"]();break;case"checkAllText":menu.find("a.ui-multiselect-all span").eq(-1).text(value);break;case"uncheckAllText":menu.find("a.ui-multiselect-none span").eq(-1).text(value);break;case"height":menu.find("ul").last().height(parseInt(value,10));break;case"minWidth":case"menuWidth":this.options[key]=parseInt(value,10);this._setButtonWidth();this._setMenuWidth();break;case"selectedText":case"selectedList":case"noneSelectedText":this.options[key]=value;this.update();break;case"classes":menu.add(this.button).removeClass(this.options.classes).addClass(value);break;case"multiple":menu.toggleClass("ui-multiselect-single",!value);this.options.multiple=value;this.element[0].multiple=value;this.refresh();break;case"position":this.position()}$.Widget.prototype._setOption.apply(this,arguments)}})})(jQuery);
+</=o.selectedlist){value=$checked.map(function(){return></ul></ul></div></div></span>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.min/" data-id="cit293it4001fawul18u5skhp" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/src/jquery.multiselect" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.023Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, boss:true, undef:true, curly:true, browser:true, jquery:true */
+/*
+ * jQuery MultiSelect UI Widget 1.16pre
+ * Copyright (c) 2012 Eric Hynds
+ *
+ * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
+ *
+ * Depends:
+ *   - jQuery 1.4.2+
+ *   - jQuery UI 1.8 widget factory
+ *
+ * Optional:
+ *   - jQuery UI effects
+ *   - jQuery UI position utility
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ *
+ */
+(function($, undefined) {
+
+  var multiselectID = 0;
+  var $doc = $(document);
+
+  $.widget("ech.multiselect", {
+
+    // default options
+    options: {
+      header: true,
+      height: 175,
+      minWidth: 225,
+      classes: '',
+      checkAllText: 'Check all',
+      uncheckAllText: 'Uncheck all',
+      noneSelectedText: 'Select options',
+      selectedText: '# selected',
+      selectedList: 0,
+      closeIcon: 'ui-icon-circle-close',
+      show: null,
+      hide: null,
+      autoOpen: false,
+      multiple: true,
+      position: {},
+      appendTo: "body",
+      menuWidth:null,
+      selectedListSeparator: ', '
+    },
+
+    _create: function() {
+      var el = this.element;
+      var o = this.options;
+
+      this.speed = $.fx.speeds._default; // default speed for effects
+      this._isOpen = false; // assume no
+
+      // create a unique namespace for events that the widget
+      // factory cannot unbind automatically. Use eventNamespace if on
+      // jQuery UI 1.9+, and otherwise fallback to a custom string.
+      this._namespaceID = this.eventNamespace || ('multiselect' + multiselectID);
+
+      var button = (this.button = $('<button type="button"><span class="ui-icon ui-icon-triangle-1-s"></span></button>'))
+        .addClass('ui-multiselect ui-widget ui-state-default ui-corner-all')
+        .addClass(o.classes)
+        .attr({ 'title':el.attr('title'), 'tabIndex':el.attr('tabIndex'), 'id': el.attr('id') ? el.attr('id')  + '_ms' : null })
+        .prop('aria-haspopup', true)
+        .insertAfter(el),
+
+        buttonlabel = (this.buttonlabel = $('<span>'))
+          .html(o.noneSelectedText)
+          .appendTo(button),
+
+        menu = (this.menu = $('<div>'))
+          .addClass('ui-multiselect-menu ui-widget ui-widget-content ui-corner-all')
+          .addClass(o.classes)
+          .appendTo($(o.appendTo)),
+
+        header = (this.header = $('<div>'))
+          .addClass('ui-widget-header ui-corner-all ui-multiselect-header ui-helper-clearfix')
+          .appendTo(menu),
+
+        headerLinkContainer = (this.headerLinkContainer = $('<ul>'))
+          .addClass('ui-helper-reset')
+          .html(function() {
+            if(o.header === true) {
+              return '<li><a class="ui-multiselect-all" href="#"><span class="ui-icon ui-icon-check"></span><span>' + o.checkAllText + '</span></a></li><li><a class="ui-multiselect-none" href="#"><span class="ui-icon ui-icon-closethick"></span><span>' + o.uncheckAllText + '</span></a></li>';
+            } else if(typeof o.header === "string") {
+              return '<li>' + o.header + '</li>';
+            } else {
+              return '';
+            }
+          })
+          .append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon '+o.closeIcon+'"></span></a></li>')
+          .appendTo(header),
+
+        checkboxContainer = (this.checkboxContainer = $('<ul>'))
+          .addClass('ui-multiselect-checkboxes ui-helper-reset')
+          .appendTo(menu);
+
+        // perform event bindings
+        this._bindEvents();
+
+        // build menu
+        this.refresh(true);
+
+        // some addl. logic for single selects
+        if(!o.multiple) {
+          menu.addClass('ui-multiselect-single');
+        }
+
+        // bump unique ID
+        multiselectID++;
+        el.hide();
+    },
+
+    _init: function() {
+      if(this.options.header === false) {
+        this.header.hide();
+      }
+      if(!this.options.multiple) {
+        this.headerLinkContainer.find('.ui-multiselect-all, .ui-multiselect-none').hide();
+      }
+      if(this.options.autoOpen) {
+        this.open();
+      }
+      if(this.element.is(':disabled')) {
+        this.disable();
+      }
+    },
+
+    refresh: function(init) {
+      var inputIdCounter = 0;
+      var el = this.element;
+      var o = this.options;
+      var menu = this.menu;
+      var checkboxContainer = this.checkboxContainer;
+      var html = "";
+      var $dropdown = $("<ul>").addClass('ui-multiselect-checkboxes ui-helper-reset');
+      var id = el.attr('id') || multiselectID++; // unique ID for the label & option tags
+
+      function makeItem(option, isInOptionGroup) {
+        var title = option.title ? option.title : null;
+        var value = option.value;
+        var inputID = 'ui-multiselect-' + multiselectID + '-' + (option.id || id + '-option-' + inputIdCounter++);
+        var isDisabled = option.disabled;
+        var isSelected = option.selected;
+        var labelClasses = [ 'ui-corner-all' ];
+        var liClasses = [];
+
+        if(isDisabled) {
+          liClasses.push('ui-multiselect-disabled');
+          labelClasses.push('ui-state-disabled');
+        }
+        if(option.className) {
+          liClasses.push(option.className);
+        }
+        if(isSelected && !o.multiple) {
+          labelClasses.push('ui-state-active');
+        }
+        if(isInOptionGroup) {
+          liClasses.push('ui-multiselect-optgrp-child');
+        }
+
+        var $item = $("<li>").addClass(liClasses.join(' '));
+        var $label = $("<label>").attr({
+          "for": inputID,
+          "title": title
+        }).addClass(labelClasses.join(' ')).appendTo($item);
+        var $input = $("<input>").attr({
+          "name": "multiselect_" + id,
+          "type": o.multiple ? "checkbox" : "radio",
+          "value": value,
+          "title": title,
+          "id": inputID,
+          "checked": isSelected ? "checked" : null,
+          "aria-selected": isSelected ? "true" : null,
+          "disabled": isDisabled ? "disabled" : null,
+          "aria-disabled": isDisabled ? "true" : null
+        }).appendTo($label);
+
+        $("<span>").text($(option).text()).appendTo($label);
+
+        return $item;
+      }//makeItem
+
+      // update header link container visibility if needed
+      if (this.options.header) {
+        if(!this.options.multiple) {
+          this.headerLinkContainer.find('.ui-multiselect-all, .ui-multiselect-none').hide();
+        } else {
+          this.headerLinkContainer.find('.ui-multiselect-all, .ui-multiselect-none').show();
+        }
+      }
+
+      //Turn all the options and optiongroups into list items
+      el.children().each(function(i) {
+        var $this = $(this);
+
+        if(this.tagName === 'OPTGROUP') {
+          var $groupLabel = $("<li>").addClass('ui-multiselect-optgroup-label ' + this.className).appendTo($dropdown);
+          var $link = $("<a>").attr("href", "#").text(this.getAttribute('label')).appendTo($groupLabel);
+
+          $this.children().each(function() {
+            var $listItem = makeItem(this, true).appendTo($dropdown);
+          });
+        } else {
+          var $listItem = makeItem(this).appendTo($dropdown);
+        }
+
+      });
+
+      this.menu.find(".ui-multiselect-checkboxes").remove();
+      this.menu.append($dropdown);
+
+      // cache some moar useful elements
+      this.labels = menu.find('label');
+      this.inputs = this.labels.children('input');
+
+      // set widths
+      this._setButtonWidth();
+      this._setMenuWidth();
+
+      // remember default value
+      this.button[0].defaultValue = this.update();
+
+      // broadcast refresh event; useful for widgets
+      if(!init) {
+        this._trigger('refresh');
+      }
+    },
+
+    // updates the button text. call refresh() to rebuild
+    update: function() {
+      var o = this.options;
+      var $inputs = this.inputs;
+      var $checked = $inputs.filter(':checked');
+      var numChecked = $checked.length;
+      var value;
+
+      if(numChecked === 0) {
+        value = o.noneSelectedText;
+      } else {
+        if($.isFunction(o.selectedText)) {
+          value = o.selectedText.call(this, numChecked, $inputs.length, $checked.get());
+        } else if(/\d/.test(o.selectedList) && o.selectedList > 0 && numChecked </a></li></span></label></li></ul></ul></ul></div></div></span>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect/" data-id="cit293it4001eawulypijdttz" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter.min" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter.min/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.022Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, boss:true, undef:true, curly:true, browser:true, jquery:true */
+/*
+ * jQuery MultiSelect UI Widget Filtering Plugin 1.5pre
+ * Copyright (c) 2012 Eric Hynds
+ *
+ * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
+ *
+ * Depends:
+ *   - jQuery UI MultiSelect widget
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ *
+ */
+(function($){var rEscape=/[\-\[\]{}()*+?.,\\\^$|#\s]/g;$.widget("ech.multiselectfilter",{options:{label:"Filter:",width:null,placeholder:"Enter keywords",autoReset:false},_create:function(){var opts=this.options;var elem=$(this.element);var instance=this.instance=elem.data("echMultiselect")||elem.data("multiselect")||elem.data("ech-multiselect");var header=this.header=instance.menu.find(".ui-multiselect-header").addClass("ui-multiselect-hasfilter");var wrapper=this.wrapper=$('<div class="ui-multiselect-filter">'+(opts.label.length?opts.label:"")+'<input placeholder="'+opts.placeholder+'" type="search" '+(="" \d="" .test(opts.width)?'style="width:'+opts.width+'px" ':"")+"=""></div>").prependTo(this.header);this.inputs=instance.menu.find('input[type="checkbox"], input[type="radio"]');this.input=wrapper.find("input").bind({keydown:function(e){if(e.which===13){e.preventDefault()}},keyup:$.proxy(this._handler,this),click:$.proxy(this._handler,this)});this.updateCache();instance._toggleChecked=function(flag,group){var $inputs=group&&group.length?group:this.labels.find("input");var _self=this;var selector=_self._isOpen?":disabled, :hidden":":disabled";$inputs=$inputs.not(selector).each(this._toggleState("checked",flag));this.update();var values=$inputs.map(function(){return this.value}).get();this.element.find("option").filter(function(){if(!this.disabled&&$.inArray(this.value,values)>-1){_self._toggleState("selected",flag).call(this)}});if($inputs.length){this.element.trigger("change")}};var doc=$(document).bind("multiselectrefresh."+instance._namespaceID,$.proxy(function(){this.updateCache();this._handler()},this));if(this.options.autoReset){doc.bind("multiselectclose."+instance._namespaceID,$.proxy(this._reset,this))}},_handler:function(e){var term=$.trim(this.input[0].value.toLowerCase()),rows=this.rows,inputs=this.inputs,cache=this.cache;if(!term){rows.show()}else{rows.hide();var regex=new RegExp(term.replace(rEscape,"\\$&"),"gi");this._trigger("filter",e,$.map(cache,function(v,i){if(v.search(regex)!==-1){rows.eq(i).show();return inputs.get(i)}return null}))}this.instance.menu.find(".ui-multiselect-optgroup-label").each(function(){var $this=$(this);var isVisible=$this.nextUntil(".ui-multiselect-optgroup-label").filter(function(){return $.css(this,"display")!=="none"}).length;$this[isVisible?"show":"hide"]()})},_reset:function(){this.input.val("").trigger("keyup")},updateCache:function(){this.rows=this.instance.menu.find(".ui-multiselect-checkboxes li:not(.ui-multiselect-optgroup-label)");this.cache=this.element.children().map(function(){var elem=$(this);if(this.tagName.toLowerCase()==="optgroup"){elem=elem.children()}return elem.map(function(){return this.innerHTML.toLowerCase()}).get()}).get()},widget:function(){return this.wrapper},destroy:function(){$.Widget.prototype.destroy.call(this);this.input.val("").trigger("keyup");this.wrapper.remove()}})})(jQuery);
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter.min/" data-id="cit293it4001dawullxsgnsay" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.021Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, boss:true, undef:true, curly:true, browser:true, jquery:true */
+/*
+ * jQuery MultiSelect UI Widget Filtering Plugin 1.5pre
+ * Copyright (c) 2012 Eric Hynds
+ *
+ * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
+ *
+ * Depends:
+ *   - jQuery UI MultiSelect widget
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ *
+ */
+(function($) {
+  var rEscape = /[\-\[\]{}()*+?.,\\\^$|#\s]/g;
+
+  //Courtesy of underscore.js
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) {
+          func.apply(context, args);
+        }
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) {
+        func.apply(context, args);
+      }
+    };
+  }
+
+  $.widget('ech.multiselectfilter', {
+
+    options: {
+      label: 'Filter:',
+      width: null, /* override default width set in css file (px). null will inherit */
+      placeholder: 'Enter keywords',
+      autoReset: false,
+      debounceMS: 250
+    },
+
+    _create: function() {
+      var opts = this.options;
+      var elem = $(this.element);
+
+      // get the multiselect instance
+      var instance = (this.instance = (elem.data('echMultiselect') || elem.data("multiselect") || elem.data("ech-multiselect")));
+
+      // store header; add filter class so the close/check all/uncheck all links can be positioned correctly
+      var header = (this.header = instance.menu.find('.ui-multiselect-header').addClass('ui-multiselect-hasfilter'));
+
+      // wrapper elem
+      var wrapper = (this.wrapper = $('<div class="ui-multiselect-filter">' + (opts.label.length ? opts.label : '') + '<input placeholder="'+opts.placeholder+'" type="search" '="" +="" (="" \d="" .test(opts.width)="" ?="" 'style="width:'+opts.width+'px" :="" '')=""></div>').prependTo(this.header));
+
+      // reference to the actual inputs
+      this.inputs = instance.menu.find('input[type="checkbox"], input[type="radio"]');
+
+      // build the input box
+      this.input = wrapper.find('input').bind({
+        keydown: function(e) {
+          // prevent the enter key from submitting the form / closing the widget
+          if(e.which === 13) {
+            e.preventDefault();
+          }
+        },
+        input: $.proxy(debounce(this._handler, opts.debounceMS), this),
+        search: $.proxy(this._handler, this)
+      });
+
+      // cache input values for searching
+      this.updateCache();
+
+      // rewrite internal _toggleChecked fn so that when checkAll/uncheckAll is fired,
+      // only the currently filtered elements are checked
+      instance._toggleChecked = function(flag, group) {
+        var $inputs = (group && group.length) ?  group : this.labels.find('input');
+        var _self = this;
+
+        // do not include hidden elems if the menu isn't open.
+        var selector = _self._isOpen ?  ':disabled, :hidden' : ':disabled';
+
+        $inputs = $inputs
+          .not(selector)
+          .each(this._toggleState('checked', flag));
+
+        // update text
+        this.update();
+
+        // gather an array of the values that actually changed
+        var values = {};
+        $inputs.each(function() {
+          values[this.value] = true;
+        });
+
+        // select option tags
+        this.element.find('option').filter(function() {
+          if(!this.disabled && values[this.value]) {
+            _self._toggleState('selected', flag).call(this);
+          }
+        });
+
+        // trigger the change event on the select
+        if($inputs.length) {
+          this.element.trigger('change');
+        }
+      };
+
+      // rebuild cache when multiselect is updated
+      var doc = $(document).bind('multiselectrefresh.'+ instance._namespaceID, $.proxy(function() {
+        this.updateCache();
+        this._handler();
+      }, this));
+
+      // automatically reset the widget on close?
+      if(this.options.autoReset) {
+        doc.bind('multiselectclose.'+ instance._namespaceID, $.proxy(this._reset, this));
+      }
+    },
+
+    // thx for the logic here ben alman
+    _handler: function(e) {
+      var term = $.trim(this.input[0].value.toLowerCase()),
+
+      // speed up lookups
+      rows = this.rows, inputs = this.inputs, cache = this.cache;
+
+      if(!term) {
+        rows.show();
+      } else {
+        rows.hide();
+
+        var regex = new RegExp(term.replace(rEscape, "\\$&"), 'gi');
+
+        this._trigger("filter", e, $.map(cache, function(v, i) {
+          if(v.search(regex) !== -1) {
+            rows.eq(i).show();
+            return inputs.get(i);
+          }
+
+          return null;
+        }));
+      }
+
+      // show/hide optgroups
+      this.instance.menu.find(".ui-multiselect-optgroup-label").each(function() {
+        var $this = $(this);
+        var isVisible = $this.nextUntil('.ui-multiselect-optgroup-label').filter(function() {
+          return $.css(this, "display") !== 'none';
+        }).length;
+
+        $this[isVisible ? 'show' : 'hide']();
+      });
+    },
+
+    _reset: function() {
+      this.input.val('').trigger('keyup');
+    },
+
+    updateCache: function() {
+      // each list item
+      this.rows = this.instance.menu.find(".ui-multiselect-checkboxes li:not(.ui-multiselect-optgroup-label)");
+
+      // cache
+      this.cache = this.element.children().map(function() {
+        var elem = $(this);
+
+        // account for optgroups
+        if(this.tagName.toLowerCase() === "optgroup") {
+          elem = elem.children();
+        }
+
+        return elem.map(function() {
+          return this.innerHTML.toLowerCase();
+        }).get();
+      }).get();
+    },
+
+    widget: function() {
+      return this.wrapper;
+    },
+
+    destroy: function() {
+      $.Widget.prototype.destroy.call(this);
+      this.input.val('').trigger("keyup");
+      this.wrapper.remove();
+    }
+  });
+
+})(jQuery);
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/src/jquery.multiselect.filter/" data-id="cit293it4001cawulw3khadbg" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-tw" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-tw/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.019Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* Simplified Chinese initialisation for the jQuery UI multiselect plugin. */
+/* Written by Ben (ben@zfben.com). */
+
+(function ( $ ) {
+
+$.extend($.ech.multiselect.prototype.options, {
+	checkAllText: '全選',
+	uncheckAllText: '清空',
+	noneSelectedText: '請選擇',
+	selectedText: '# 已選擇'
+});
+
+})( jQuery );
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-tw/" data-id="cit293it4001bawul057ul5ho" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-cn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-cn/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.018Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* Simplified Chinese initialisation for the jQuery UI multiselect plugin. */
+/* Written by Ben (ben@zfben.com). */
+
+(function ( $ ) {
+
+$.extend($.ech.multiselect.prototype.options, {
+	checkAllText: '全选',
+	uncheckAllText: '清空',
+	noneSelectedText: '请选择',
+	selectedText: '# 已选择'
+});
+
+})( jQuery );
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.zh-cn/" data-id="cit293it4001aawul5n97ud88" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.tr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.tr/" class="article-date">
+  <time datetime="2016-09-14T01:23:28.018Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        /* Turkish initialisation for the jQuery UI multiselect plugin. */
+/* Written by Yusuf Özer (realsby@gmail.com). */
+
+(function ( $ ) {
+
+$.extend($.ech.multiselect.prototype.options, {
+  checkAllText: 'Tümünü seç',
+  uncheckAllText: 'Tümünü sil',
+  noneSelectedText: 'Seçenekleri belirleyin',
+  selectedText: '# adet seçildi'
+});
+	
+})( jQuery );
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jquery-ui-multiselect-widget-master/i18n/jquery.multiselect.tr/" data-id="cit293it40018awulocvkzy2x" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/装逼界/">装逼界</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/装逼界/" style="font-size: 10px;">装逼界</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/style/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/widget-containers/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/formsubmission/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/visual/form-reset/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jquery-ui-multiselect-widget-master/tests/unit/qunit/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
