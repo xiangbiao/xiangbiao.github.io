@@ -796,6 +796,937 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
+              2016-09-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            /* ----------------------------------------------------------------------------
+ * Fonts
+ */
+@import url("http://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:300");
+/* ----------------------------------------------------------------------------
+ * Base
+ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  overflow-x: hidden;
+}
+body,
+td,
+textarea,
+input {
+  font-family: Helvetica Neue, Open Sans, sans-serif;
+  line-height: 1.6;
+  font-size: 13px;
+  color: #505050;
+}
+@media (max-width: 480px) /* Mobile */ {
+  body,
+  td,
+  textarea,
+  input {
+    font-size: 12px;
+  }
+}
+a {
+  color: #2badad;
+  text-decoration: none;
+}
+a:hover {
+  color: #228a8a;
+}
+/* ----------------------------------------------------------------------------
+ * Content styling
+ */
+.content p,
+.content ul,
+.content ol,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content pre,
+.content blockquote {
+  padding: 10px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.content pre {
+  font-family: Menlo, monospace;
+}
+.content ul > li {
+  list-style-type: disc;
+}
+.content ol > li {
+  list-style-type: decimal;
+}
+.content ul,
+.content ol {
+  margin-left: 20px;
+}
+.content ul > li {
+  list-style-type: none;
+  position: relative;
+}
+.content ul > li:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -17px;
+  top: 7px;
+  width: 5px;
+  height: 5px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #fff;
+  border: solid 1px #9090aa;
+}
+.content li > :first-child {
+  padding-top: 0;
+}
+.content strong,
+.content b {
+  font-weight: bold;
+}
+.content i,
+.content em {
+  font-style: italic;
+  color: #9090aa;
+}
+.content code {
+  font-family: Menlo, monospace;
+  background: #f3f6fb;
+  padding: 1px 3px;
+  font-size: 0.95em;
+}
+.content pre > code {
+  display: block;
+  background: transparent;
+  font-size: 0.85em;
+  letter-spacing: -1px;
+}
+.content blockquote :first-child {
+  padding-top: 0;
+}
+.content blockquote :last-child {
+  padding-bottom: 0;
+}
+/* ----------------------------------------------------------------------------
+ * Content
+ */
+.content-root {
+  min-height: 90%;
+  position: relative;
+}
+.content {
+  padding-top: 30px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  zoom: 1;
+  max-width: 700px;
+}
+.content:before,
+.content:after {
+  content: "";
+  display: table;
+}
+.content:after {
+  clear: both;
+}
+.content blockquote {
+  color: #9090aa;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+.content h1,
+.content h2,
+.content h3 {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: montserrat;
+  padding-bottom: 0;
+}
+.content h1 + p,
+.content h2 + p,
+.content h3 + p,
+.content h1 ul,
+.content h2 ul,
+.content h3 ul,
+.content h1 ol,
+.content h2 ol,
+.content h3 ol {
+  padding-top: 10px;
+}
+.content h1,
+.content h2 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.5em;
+}
+.content h3 {
+  font-size: 1.2em;
+}
+.content h1,
+.content h2,
+.content .big-heading,
+body.big-h3 .content h3 {
+  padding-top: 80px;
+}
+.content h1:before,
+.content h2:before,
+.content .big-heading:before,
+body.big-h3 .content h3:before {
+  display: block;
+  content: '';
+  background: -webkit-gradient(linear, left top, right top, color-stop(0.8, #dfe2e7), color-stop(1, rgba(223,226,231,0)));
+  background: -webkit-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
+  background: -moz-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
+  background: -o-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
+  background: -ms-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
+  background: linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  height: 1px;
+  position: relative;
+  top: -40px;
+  left: -40px;
+  width: 100%;
+}
+@media (max-width: 768px) /* Mobile and tablet */ {
+  .content h1,
+  .content h2,
+  .content .big-heading,
+body.big-h3 .content h3 {
+    padding-top: 40px;
+  }
+  .content h1:before,
+  .content h2:before,
+  .content .big-heading:before,
+body.big-h3 .content h3:before {
+    background: #dfe2e7;
+    left: -40px;
+    top: -20px;
+    width: 120%;
+  }
+}
+.content h4,
+.content h5,
+.content .small-heading,
+body:not(.big-h3) .content h3 {
+  border-bottom: solid 1px rgba(0,0,0,0.07);
+  color: #9090aa;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+body:not(.big-h3) .content h3 {
+  font-size: 0.9em;
+}
+.content h1:first-child {
+  padding-top: 0;
+}
+.content h1:first-child,
+.content h1:first-child a,
+.content h1:first-child a:visited {
+  color: #505050;
+}
+.content h1:first-child:before {
+  display: none;
+}
+@media (max-width: 768px) /* Tablet */ {
+  .content h4,
+  .content h5,
+  .content .small-heading,
+  body:not(.big-h3) .content h3 {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 480px) /* Mobile */ {
+  .content {
+    padding: 20px;
+    padding-top: 40px;
+  }
+  .content h4,
+  .content h5,
+  .content .small-heading,
+  body:not(.big-h3) .content h3 {
+    padding-top: 10px;
+  }
+}
+body.no-literate .content pre > code {
+  background: #f3f6fb;
+  border: solid 1px #e7eaee;
+  border-top: solid 1px #dbdde2;
+  border-left: solid 1px #e2e5e9;
+  display: block;
+  padding: 10px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  overflow: auto;
+}
+body.no-literate .content pre > code {
+  -webkit-overflow-scrolling: touch;
+}
+body.no-literate .content pre > code::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+body.no-literate .content pre > code::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border: solid 4px #f3f6fb;
+}
+body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
+  background: #999;
+  -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+  box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+}
+@media (max-width: 1180px) /* Small desktop */ {
+  .content pre > code {
+    background: #f3f6fb;
+    border: solid 1px #e7eaee;
+    border-top: solid 1px #dbdde2;
+    border-left: solid 1px #e2e5e9;
+    display: block;
+    padding: 10px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    overflow: auto;
+  }
+  .content pre > code {
+    -webkit-overflow-scrolling: touch;
+  }
+  .content pre > code::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+  }
+  .content pre > code::-webkit-scrollbar-thumb {
+    background: #ddd;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    border: solid 4px #f3f6fb;
+  }
+  .content pre > code:hover::-webkit-scrollbar-thumb {
+    background: #999;
+    -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+    box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+  }
+}
+.button {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: montserrat, sans-serif;
+  letter-spacing: -1px;
+  font-weight: bold;
+  display: inline-block;
+  padding: 3px 25px;
+  border: solid 2px #2badad;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  margin-right: 15px;
+}
+.button,
+.button:visited {
+  background: #2badad;
+  color: #fff;
+  text-shadow: none;
+}
+.button:hover {
+  border-color: #111;
+  background: #111;
+  color: #fff;
+}
+.button.light,
+.button.light:visited {
+  background: transparent;
+  color: #9090aa;
+  border-color: #9090aa;
+  text-shadow: none;
+}
+.button.light:hover {
+  border-color: #9090aa;
+  background: #9090aa;
+  color: #fff;
+}
+.content .button + em {
+  color: #9090aa;
+}
+@media (min-width: 1180px) /* Big desktop */ {
+  body:not(.no-literate) .content-root {
+    background-color: #f3f6fb;
+    -webkit-box-shadow: inset 780px 0 #fff, inset 781px 0 #dfe2e7, inset 790px 0 5px -10px rgba(0,0,0,0.1);
+    box-shadow: inset 780px 0 #fff, inset 781px 0 #dfe2e7, inset 790px 0 5px -10px rgba(0,0,0,0.1);
+  }
+}
+@media (min-width: 1180px) /* Big desktop */ {
+  body:not(.no-literate) .content {
+    padding-left: 0;
+    padding-right: 0;
+    width: 930px;
+    max-width: none;
+  }
+  body:not(.no-literate) .content > p,
+  body:not(.no-literate) .content > ul,
+  body:not(.no-literate) .content > ol,
+  body:not(.no-literate) .content > h1,
+  body:not(.no-literate) .content > h2,
+  body:not(.no-literate) .content > h3,
+  body:not(.no-literate) .content > h4,
+  body:not(.no-literate) .content > h5,
+  body:not(.no-literate) .content > h6,
+  body:not(.no-literate) .content > pre,
+  body:not(.no-literate) .content > blockquote {
+    width: 550px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+  body:not(.no-literate) .content > h1,
+  body:not(.no-literate) .content > h2,
+  body:not(.no-literate) .content > h3 {
+    clear: both;
+    width: 100%;
+  }
+  body:not(.no-literate) .content > pre,
+  body:not(.no-literate) .content > blockquote {
+    width: 380px;
+    padding-left: 20px;
+    padding-right: 20px;
+    float: right;
+    clear: right;
+  }
+  body:not(.no-literate) .content > pre + p,
+  body:not(.no-literate) .content > blockquote + p,
+  body:not(.no-literate) .content > pre + ul,
+  body:not(.no-literate) .content > blockquote + ul,
+  body:not(.no-literate) .content > pre + ol,
+  body:not(.no-literate) .content > blockquote + ol,
+  body:not(.no-literate) .content > pre + h4,
+  body:not(.no-literate) .content > blockquote + h4,
+  body:not(.no-literate) .content > pre + h5,
+  body:not(.no-literate) .content > blockquote + h5,
+  body:not(.no-literate) .content > pre + h6,
+  body:not(.no-literate) .content > blockquote + h6 {
+    clear: both;
+  }
+  body:not(.no-literate) .content > p,
+  body:not(.no-literate) .content > ul,
+  body:not(.no-literate) .content > ol,
+  body:not(.no-literate) .content > h4,
+  body:not(.no-literate) .content > h5,
+  body:not(.no-literate) .content > h6 {
+    float: left;
+    clear: left;
+  }
+  body:not(.no-literate) .content > h4,
+  body:not(.no-literate) .content > h5,
+  body:not(.no-literate) .content > .small-heading,
+  body:not(.big-h3) body:not(.no-literate) .content > h3 {
+    margin-left: 40px;
+    width: 470px;
+    margin-bottom: 3px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body:not(.no-literate):not(.big-h3) .content > h3 {
+    margin-left: 40px;
+    width: 470px;
+    margin-bottom: 3px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+.header {
+  background: #f3f6fb;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  border-bottom: solid 1px #dfe2e7;
+  padding: 15px 15px 15px 30px;
+  zoom: 1;
+  line-height: 20px;
+  position: relative;
+}
+.header:before,
+.header:after {
+  content: "";
+  display: table;
+}
+.header:after {
+  clear: both;
+}
+.header .left {
+  float: left;
+}
+.header .right {
+  text-align: right;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.header .right iframe {
+  display: inline-block;
+  vertical-align: middle;
+}
+.header h1 {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-weight: bold;
+  font-family: montserrat, sans-serif;
+  font-size: 13px;
+}
+.header h1,
+.header h1 a,
+.header h1 a:visited {
+  color: #9090aa;
+}
+.header h1 a:hover {
+  color: #505050;
+}
+.header li a {
+  font-size: 0.88em;
+  color: #9090aa;
+  display: block;
+}
+.header li a:hover {
+  color: #3a3a44;
+}
+@media (min-width: 480px) /* Tablet & Desktop */ {
+  .header h1 {
+    float: left;
+  }
+  .header ul,
+  .header li {
+    display: block;
+    float: left;
+  }
+  .header ul {
+    margin-left: -15px;
+  }
+  .header h1 + ul {
+    border-left: solid 1px #dfe2e7;
+    margin-left: 15px;
+  }
+  .header li {
+    border-left: solid 1px rgba(255,255,255,0.5);
+    border-right: solid 1px #dfe2e7;
+  }
+  .header li:last-child {
+    border-right: 0;
+  }
+  .header li a {
+    padding: 0 15px;
+  }
+}
+@media (max-width: 480px) /* Mobile */ {
+  .right {
+    display: none;
+  }
+}
+.menubar {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.menubar .section {
+  padding: 30px 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.menubar .section + .section {
+  border-top: solid 1px #dfe2e7;
+}
+.menubar .section.no-line {
+  border-top: 0;
+  padding-top: 0;
+}
+a.big.button {
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  background: transparent;
+  border: solid 3px #2badad;
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  font-family: montserrat, sans-serif;
+}
+a.big.button,
+a.big.button:visited {
+  color: #2badad;
+  text-decoration: none;
+}
+a.big.button:hover {
+  background: #2badad;
+}
+a.big.button:hover,
+a.big.button:hover:visited {
+  color: #fff;
+}
+@media (max-width: 480px) /* Mobile */ {
+  .menubar {
+    padding: 20px;
+    border-bottom: solid 1px #dfe2e7;
+  }
+}
+@media (max-width: 768px) /* Mobile and tablet */ {
+  .menubar {
+    display: none;
+  }
+}
+@media (min-width: 768px) /* Desktop */ {
+  .content-root {
+    padding-left: 230px;
+  }
+  .menubar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 230px;
+    border-right: solid 1px #dfe2e7;
+  }
+  .menubar.fixed {
+    position: fixed;
+    overflow-y: auto;
+  }
+  .menubar.fixed {
+    -webkit-overflow-scrolling: touch;
+  }
+  .menubar.fixed::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+  }
+  .menubar.fixed::-webkit-scrollbar-thumb {
+    background: #ddd;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    border: solid 4px #fff;
+  }
+  .menubar.fixed:hover::-webkit-scrollbar-thumb {
+    background: #999;
+    -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+    box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
+  }
+}
+.menubar {
+  font-size: 0.9em;
+}
+.menu ul.level-1 > li + li {
+  margin-top: 20px;
+}
+.menu a {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-right: -30px;
+}
+.menu a,
+.menu a:visited {
+  color: #2badad;
+}
+.menu a:hover {
+  color: #228a8a;
+}
+.menu a.level-1 {
+  font-family: montserrat, sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.menu a.level-1,
+.menu a.level-1:visited {
+  color: #9090aa;
+}
+.menu a.level-1:hover {
+  color: #565666;
+}
+.menu a.level-2 {
+  font-weight: normal;
+}
+.menu a.level-3 {
+  font-weight: normal;
+  font-size: 0.9em;
+  padding-left: 10px;
+}
+.menu a.active {
+  font-weight: bold !important;
+}
+.menu a.active,
+.menu a.active:visited,
+.menu a.active:hover {
+  color: #505050 !important;
+}
+.menu a.active:after {
+  content: '';
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  width: 9px;
+  height: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: #2badad;
+}
+code .string,
+code .number {
+  color: #3ac;
+}
+code .init {
+  color: #383;
+}
+code .keyword {
+  font-weight: bold;
+}
+code .comment {
+  color: #adadcc;
+}
+.large-brief .content > h1:first-child + p,
+.content > p.brief {
+  font-size: 1.3em;
+  font-family: Open Sans, sans-serif;
+  font-weight: 300;
+}
+.title-area {
+  min-height: 100px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-align: center;
+  border-bottom: solid 1px #dfe2e7;
+  overflow: hidden;
+}
+.title-area > img.bg {
+  z-index: 0;
+  position: absolute;
+  left: -9999px;
+}
+.title-area > div {
+  position: relative;
+  z-index: 1;
+}
+
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/flatdoc/" itemprop="url">
                   Unbenannt
                 </a>
@@ -2507,937 +3438,6 @@ Includes:
             
               
                 
-                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/" itemprop="url">
-                  Unbenannt
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
-              2016-09-14
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            /* ----------------------------------------------------------------------------
- * Fonts
- */
-@import url("http://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:300");
-/* ----------------------------------------------------------------------------
- * Base
- */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-weight: inherit;
-  font-style: inherit;
-  font-family: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-body {
-  line-height: 1;
-  color: #000;
-  background: #fff;
-}
-ol,
-ul {
-  list-style: none;
-}
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  vertical-align: middle;
-}
-caption,
-th,
-td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-a img {
-  border: none;
-}
-html,
-body {
-  height: 100%;
-}
-html {
-  overflow-x: hidden;
-}
-body,
-td,
-textarea,
-input {
-  font-family: Helvetica Neue, Open Sans, sans-serif;
-  line-height: 1.6;
-  font-size: 13px;
-  color: #505050;
-}
-@media (max-width: 480px) /* Mobile */ {
-  body,
-  td,
-  textarea,
-  input {
-    font-size: 12px;
-  }
-}
-a {
-  color: #2badad;
-  text-decoration: none;
-}
-a:hover {
-  color: #228a8a;
-}
-/* ----------------------------------------------------------------------------
- * Content styling
- */
-.content p,
-.content ul,
-.content ol,
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6,
-.content pre,
-.content blockquote {
-  padding: 10px 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6 {
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-.content pre {
-  font-family: Menlo, monospace;
-}
-.content ul > li {
-  list-style-type: disc;
-}
-.content ol > li {
-  list-style-type: decimal;
-}
-.content ul,
-.content ol {
-  margin-left: 20px;
-}
-.content ul > li {
-  list-style-type: none;
-  position: relative;
-}
-.content ul > li:before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: -17px;
-  top: 7px;
-  width: 5px;
-  height: 5px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: #fff;
-  border: solid 1px #9090aa;
-}
-.content li > :first-child {
-  padding-top: 0;
-}
-.content strong,
-.content b {
-  font-weight: bold;
-}
-.content i,
-.content em {
-  font-style: italic;
-  color: #9090aa;
-}
-.content code {
-  font-family: Menlo, monospace;
-  background: #f3f6fb;
-  padding: 1px 3px;
-  font-size: 0.95em;
-}
-.content pre > code {
-  display: block;
-  background: transparent;
-  font-size: 0.85em;
-  letter-spacing: -1px;
-}
-.content blockquote :first-child {
-  padding-top: 0;
-}
-.content blockquote :last-child {
-  padding-bottom: 0;
-}
-/* ----------------------------------------------------------------------------
- * Content
- */
-.content-root {
-  min-height: 90%;
-  position: relative;
-}
-.content {
-  padding-top: 30px;
-  padding-bottom: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-  zoom: 1;
-  max-width: 700px;
-}
-.content:before,
-.content:after {
-  content: "";
-  display: table;
-}
-.content:after {
-  clear: both;
-}
-.content blockquote {
-  color: #9090aa;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-.content h1,
-.content h2,
-.content h3 {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: montserrat;
-  padding-bottom: 0;
-}
-.content h1 + p,
-.content h2 + p,
-.content h3 + p,
-.content h1 ul,
-.content h2 ul,
-.content h3 ul,
-.content h1 ol,
-.content h2 ol,
-.content h3 ol {
-  padding-top: 10px;
-}
-.content h1,
-.content h2 {
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 1.5em;
-}
-.content h3 {
-  font-size: 1.2em;
-}
-.content h1,
-.content h2,
-.content .big-heading,
-body.big-h3 .content h3 {
-  padding-top: 80px;
-}
-.content h1:before,
-.content h2:before,
-.content .big-heading:before,
-body.big-h3 .content h3:before {
-  display: block;
-  content: '';
-  background: -webkit-gradient(linear, left top, right top, color-stop(0.8, #dfe2e7), color-stop(1, rgba(223,226,231,0)));
-  background: -webkit-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
-  background: -moz-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
-  background: -o-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
-  background: -ms-linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
-  background: linear-gradient(left, #dfe2e7 80%, rgba(223,226,231,0) 100%);
-  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  height: 1px;
-  position: relative;
-  top: -40px;
-  left: -40px;
-  width: 100%;
-}
-@media (max-width: 768px) /* Mobile and tablet */ {
-  .content h1,
-  .content h2,
-  .content .big-heading,
-body.big-h3 .content h3 {
-    padding-top: 40px;
-  }
-  .content h1:before,
-  .content h2:before,
-  .content .big-heading:before,
-body.big-h3 .content h3:before {
-    background: #dfe2e7;
-    left: -40px;
-    top: -20px;
-    width: 120%;
-  }
-}
-.content h4,
-.content h5,
-.content .small-heading,
-body:not(.big-h3) .content h3 {
-  border-bottom: solid 1px rgba(0,0,0,0.07);
-  color: #9090aa;
-  padding-top: 30px;
-  padding-bottom: 10px;
-}
-body:not(.big-h3) .content h3 {
-  font-size: 0.9em;
-}
-.content h1:first-child {
-  padding-top: 0;
-}
-.content h1:first-child,
-.content h1:first-child a,
-.content h1:first-child a:visited {
-  color: #505050;
-}
-.content h1:first-child:before {
-  display: none;
-}
-@media (max-width: 768px) /* Tablet */ {
-  .content h4,
-  .content h5,
-  .content .small-heading,
-  body:not(.big-h3) .content h3 {
-    padding-top: 20px;
-  }
-}
-@media (max-width: 480px) /* Mobile */ {
-  .content {
-    padding: 20px;
-    padding-top: 40px;
-  }
-  .content h4,
-  .content h5,
-  .content .small-heading,
-  body:not(.big-h3) .content h3 {
-    padding-top: 10px;
-  }
-}
-body.no-literate .content pre > code {
-  background: #f3f6fb;
-  border: solid 1px #e7eaee;
-  border-top: solid 1px #dbdde2;
-  border-left: solid 1px #e2e5e9;
-  display: block;
-  padding: 10px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  overflow: auto;
-}
-body.no-literate .content pre > code {
-  -webkit-overflow-scrolling: touch;
-}
-body.no-literate .content pre > code::-webkit-scrollbar {
-  width: 15px;
-  height: 15px;
-}
-body.no-literate .content pre > code::-webkit-scrollbar-thumb {
-  background: #ddd;
-  -webkit-border-radius: 8px;
-  border-radius: 8px;
-  border: solid 4px #f3f6fb;
-}
-body.no-literate .content pre > code:hover::-webkit-scrollbar-thumb {
-  background: #999;
-  -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-  box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-}
-@media (max-width: 1180px) /* Small desktop */ {
-  .content pre > code {
-    background: #f3f6fb;
-    border: solid 1px #e7eaee;
-    border-top: solid 1px #dbdde2;
-    border-left: solid 1px #e2e5e9;
-    display: block;
-    padding: 10px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    overflow: auto;
-  }
-  .content pre > code {
-    -webkit-overflow-scrolling: touch;
-  }
-  .content pre > code::-webkit-scrollbar {
-    width: 15px;
-    height: 15px;
-  }
-  .content pre > code::-webkit-scrollbar-thumb {
-    background: #ddd;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    border: solid 4px #f3f6fb;
-  }
-  .content pre > code:hover::-webkit-scrollbar-thumb {
-    background: #999;
-    -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-    box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-  }
-}
-.button {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: montserrat, sans-serif;
-  letter-spacing: -1px;
-  font-weight: bold;
-  display: inline-block;
-  padding: 3px 25px;
-  border: solid 2px #2badad;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  margin-right: 15px;
-}
-.button,
-.button:visited {
-  background: #2badad;
-  color: #fff;
-  text-shadow: none;
-}
-.button:hover {
-  border-color: #111;
-  background: #111;
-  color: #fff;
-}
-.button.light,
-.button.light:visited {
-  background: transparent;
-  color: #9090aa;
-  border-color: #9090aa;
-  text-shadow: none;
-}
-.button.light:hover {
-  border-color: #9090aa;
-  background: #9090aa;
-  color: #fff;
-}
-.content .button + em {
-  color: #9090aa;
-}
-@media (min-width: 1180px) /* Big desktop */ {
-  body:not(.no-literate) .content-root {
-    background-color: #f3f6fb;
-    -webkit-box-shadow: inset 780px 0 #fff, inset 781px 0 #dfe2e7, inset 790px 0 5px -10px rgba(0,0,0,0.1);
-    box-shadow: inset 780px 0 #fff, inset 781px 0 #dfe2e7, inset 790px 0 5px -10px rgba(0,0,0,0.1);
-  }
-}
-@media (min-width: 1180px) /* Big desktop */ {
-  body:not(.no-literate) .content {
-    padding-left: 0;
-    padding-right: 0;
-    width: 930px;
-    max-width: none;
-  }
-  body:not(.no-literate) .content > p,
-  body:not(.no-literate) .content > ul,
-  body:not(.no-literate) .content > ol,
-  body:not(.no-literate) .content > h1,
-  body:not(.no-literate) .content > h2,
-  body:not(.no-literate) .content > h3,
-  body:not(.no-literate) .content > h4,
-  body:not(.no-literate) .content > h5,
-  body:not(.no-literate) .content > h6,
-  body:not(.no-literate) .content > pre,
-  body:not(.no-literate) .content > blockquote {
-    width: 550px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-  body:not(.no-literate) .content > h1,
-  body:not(.no-literate) .content > h2,
-  body:not(.no-literate) .content > h3 {
-    clear: both;
-    width: 100%;
-  }
-  body:not(.no-literate) .content > pre,
-  body:not(.no-literate) .content > blockquote {
-    width: 380px;
-    padding-left: 20px;
-    padding-right: 20px;
-    float: right;
-    clear: right;
-  }
-  body:not(.no-literate) .content > pre + p,
-  body:not(.no-literate) .content > blockquote + p,
-  body:not(.no-literate) .content > pre + ul,
-  body:not(.no-literate) .content > blockquote + ul,
-  body:not(.no-literate) .content > pre + ol,
-  body:not(.no-literate) .content > blockquote + ol,
-  body:not(.no-literate) .content > pre + h4,
-  body:not(.no-literate) .content > blockquote + h4,
-  body:not(.no-literate) .content > pre + h5,
-  body:not(.no-literate) .content > blockquote + h5,
-  body:not(.no-literate) .content > pre + h6,
-  body:not(.no-literate) .content > blockquote + h6 {
-    clear: both;
-  }
-  body:not(.no-literate) .content > p,
-  body:not(.no-literate) .content > ul,
-  body:not(.no-literate) .content > ol,
-  body:not(.no-literate) .content > h4,
-  body:not(.no-literate) .content > h5,
-  body:not(.no-literate) .content > h6 {
-    float: left;
-    clear: left;
-  }
-  body:not(.no-literate) .content > h4,
-  body:not(.no-literate) .content > h5,
-  body:not(.no-literate) .content > .small-heading,
-  body:not(.big-h3) body:not(.no-literate) .content > h3 {
-    margin-left: 40px;
-    width: 470px;
-    margin-bottom: 3px;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  body:not(.no-literate):not(.big-h3) .content > h3 {
-    margin-left: 40px;
-    width: 470px;
-    margin-bottom: 3px;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-.header {
-  background: #f3f6fb;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-  border-bottom: solid 1px #dfe2e7;
-  padding: 15px 15px 15px 30px;
-  zoom: 1;
-  line-height: 20px;
-  position: relative;
-}
-.header:before,
-.header:after {
-  content: "";
-  display: table;
-}
-.header:after {
-  clear: both;
-}
-.header .left {
-  float: left;
-}
-.header .right {
-  text-align: right;
-  position: absolute;
-  right: 15px;
-  top: 15px;
-}
-.header .right iframe {
-  display: inline-block;
-  vertical-align: middle;
-}
-.header h1 {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-weight: bold;
-  font-family: montserrat, sans-serif;
-  font-size: 13px;
-}
-.header h1,
-.header h1 a,
-.header h1 a:visited {
-  color: #9090aa;
-}
-.header h1 a:hover {
-  color: #505050;
-}
-.header li a {
-  font-size: 0.88em;
-  color: #9090aa;
-  display: block;
-}
-.header li a:hover {
-  color: #3a3a44;
-}
-@media (min-width: 480px) /* Tablet & Desktop */ {
-  .header h1 {
-    float: left;
-  }
-  .header ul,
-  .header li {
-    display: block;
-    float: left;
-  }
-  .header ul {
-    margin-left: -15px;
-  }
-  .header h1 + ul {
-    border-left: solid 1px #dfe2e7;
-    margin-left: 15px;
-  }
-  .header li {
-    border-left: solid 1px rgba(255,255,255,0.5);
-    border-right: solid 1px #dfe2e7;
-  }
-  .header li:last-child {
-    border-right: 0;
-  }
-  .header li a {
-    padding: 0 15px;
-  }
-}
-@media (max-width: 480px) /* Mobile */ {
-  .right {
-    display: none;
-  }
-}
-.menubar {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-.menubar .section {
-  padding: 30px 30px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.menubar .section + .section {
-  border-top: solid 1px #dfe2e7;
-}
-.menubar .section.no-line {
-  border-top: 0;
-  padding-top: 0;
-}
-a.big.button {
-  display: block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1em;
-  background: transparent;
-  border: solid 3px #2badad;
-  -webkit-border-radius: 30px;
-  border-radius: 30px;
-  font-family: montserrat, sans-serif;
-}
-a.big.button,
-a.big.button:visited {
-  color: #2badad;
-  text-decoration: none;
-}
-a.big.button:hover {
-  background: #2badad;
-}
-a.big.button:hover,
-a.big.button:hover:visited {
-  color: #fff;
-}
-@media (max-width: 480px) /* Mobile */ {
-  .menubar {
-    padding: 20px;
-    border-bottom: solid 1px #dfe2e7;
-  }
-}
-@media (max-width: 768px) /* Mobile and tablet */ {
-  .menubar {
-    display: none;
-  }
-}
-@media (min-width: 768px) /* Desktop */ {
-  .content-root {
-    padding-left: 230px;
-  }
-  .menubar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 230px;
-    border-right: solid 1px #dfe2e7;
-  }
-  .menubar.fixed {
-    position: fixed;
-    overflow-y: auto;
-  }
-  .menubar.fixed {
-    -webkit-overflow-scrolling: touch;
-  }
-  .menubar.fixed::-webkit-scrollbar {
-    width: 15px;
-    height: 15px;
-  }
-  .menubar.fixed::-webkit-scrollbar-thumb {
-    background: #ddd;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    border: solid 4px #fff;
-  }
-  .menubar.fixed:hover::-webkit-scrollbar-thumb {
-    background: #999;
-    -webkit-box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-    box-shadow: inset 2px 2px 3px rgba(0,0,0,0.2);
-  }
-}
-.menubar {
-  font-size: 0.9em;
-}
-.menu ul.level-1 > li + li {
-  margin-top: 20px;
-}
-.menu a {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  margin-right: -30px;
-}
-.menu a,
-.menu a:visited {
-  color: #2badad;
-}
-.menu a:hover {
-  color: #228a8a;
-}
-.menu a.level-1 {
-  font-family: montserrat, sans-serif;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
-}
-.menu a.level-1,
-.menu a.level-1:visited {
-  color: #9090aa;
-}
-.menu a.level-1:hover {
-  color: #565666;
-}
-.menu a.level-2 {
-  font-weight: normal;
-}
-.menu a.level-3 {
-  font-weight: normal;
-  font-size: 0.9em;
-  padding-left: 10px;
-}
-.menu a.active {
-  font-weight: bold !important;
-}
-.menu a.active,
-.menu a.active:visited,
-.menu a.active:hover {
-  color: #505050 !important;
-}
-.menu a.active:after {
-  content: '';
-  display: block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  position: absolute;
-  top: 10px;
-  right: 30px;
-  width: 9px;
-  height: 3px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  background: #2badad;
-}
-code .string,
-code .number {
-  color: #3ac;
-}
-code .init {
-  color: #383;
-}
-code .keyword {
-  font-weight: bold;
-}
-code .comment {
-  color: #adadcc;
-}
-.large-brief .content > h1:first-child + p,
-.content > p.brief {
-  font-size: 1.3em;
-  font-family: Open Sans, sans-serif;
-  font-weight: 300;
-}
-.title-area {
-  min-height: 100px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  text-align: center;
-  border-bottom: solid 1px #dfe2e7;
-  overflow: hidden;
-}
-.title-area > img.bg {
-  z-index: 0;
-  position: absolute;
-  left: -9999px;
-}
-.title-area > div {
-  position: relative;
-  z-index: 1;
-}
-
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/css/base/" itemprop="url">
                   Unbenannt
                 </a>
@@ -3912,284 +3912,6 @@ div.disabled{color:#cccccc}
             
               
                 
-                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/" itemprop="url">
-                  Unbenannt
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
-              2016-09-14
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Multiple Select</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width">
-  <meta content="Multiple Select" property="og:title">
-  <meta content="Multiple select is a jQuery plugin to select multiple elements with checkboxes :)." name="description">
-  
-  <!-- css -->
-  <link rel="stylesheet" href="css/base.css">
-
-  <script src="assets/jquery.min.js"></script>
-  <script src="assets/es5-shim.min.js"></script>
-  <!-- Flatdoc -->
-  <script src="assets/flatdoc/legacy.js"></script>
-  <script src="assets/flatdoc/flatdoc.js"></script>
-
-  <!-- Flatdoc theme -->
-  <link href="assets/flatdoc/theme-white/style.css" rel="stylesheet">
-  <script src="assets/flatdoc/theme-white/script.js"></script>
-
-  <!-- Multiple Select -->
-  <link href="../multiple-select.css" rel="stylesheet">
-  <script src="../multiple-select.js"></script>
-  
-  <!--[if lt IE 9]>
-    <script src="assets/html5shiv.js"></script>
-    <script src="assets/respond.min.js"></script>
-  <![endif]-->
-
-  <script type="text/javascript">
-    if (window!=top) // 判断当前的window对象是否是top对象
-      top.location.href = window.location.href; // 如果不是，将top对象的网址自动导向被嵌入网页的网址
-  </script>
-
-  <!-- js -->
-  <script src="js/index.js"></script>
-</head>
-<body role="flatdoc">
-  <div class="header">
-    <div class="left">
-      <h1>Multiple Select</h1>
-      <ul>
-        <li><a href="https://github.com/wenzhixin/multiple-select" target="_blank" rel="external">View on GitHub</a></li>
-        <li><a href="https://github.com/wenzhixin/multiple-select/issues" target="_blank" rel="external">Issues</a></li>
-        <li><a href="index.html">English</a></li>
-        <li><a href="index.html?locale=zh_CN">Chinese</a></li>
-      </ul>
-    </div>
-    <div class="right">
-      <!-- GitHub buttons: see http://ghbtns.com -->
-        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&repo=multiple-select&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&repo=multiple-select&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
-        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="175" height="20"></iframe>
-    </div>
-  </div>
-
-  <div class="content-root">
-    <div class="menubar">
-      <div class="section">
-        <a class="big button" href="https://github.com/wenzhixin/multiple-select" target="_blank">Download</a>
-      </div>
-      <div class="menu section" role="flatdoc-menu"></div>
-    </div>
-    <div role="flatdoc-content" class="content"></div>
-  </div>
-
-  <script src="//wenzhixin.net.cn/js/analytics.js"></script>
-</body>
-</html>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/html5shiv/" itemprop="url">
-                  Unbenannt
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
-              2016-09-14
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/html5shiv/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/html5shiv/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            /*
- HTML5 Shiv v3.6.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
-*/
-(function(l,f){function m(){var a=e.elements;return"string"==typeof a?a.split(" "):a}function i(a){var b=n[a[o]];b||(b={},h++,a[o]=h,n[h]=b);return b}function p(a,b,c){b||(b=f);if(g)return b.createElement(a);c||(c=i(b));b=c.cache[a]?c.cache[a].cloneNode():r.test(a)?(c.cache[a]=c.createElem(a)).cloneNode():c.createElem(a);return b.canHaveChildren&&!s.test(a)?c.frag.appendChild(b):b}function t(a,b){if(!b.cache)b.cache={},b.createElem=a.createElement,b.createFrag=a.createDocumentFragment,b.frag=b.createFrag();
-a.createElement=function(c){return!e.shivMethods?b.createElem(c):p(c,a,b)};a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+m().join().replace(/\w+/g,function(a){b.createElem(a);b.frag.createElement(a);return'c("'+a+'")'})+");return n}")(e,b.frag)}function q(a){a||(a=f);var b=i(a);if(e.shivCSS&&!j&&!b.hasCSS){var c,d=a;c=d.createElement("p");d=d.getElementsByTagName("head")[0]||d.documentElement;c.innerHTML="x<style>article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}</style>";
-c=d.insertBefore(c.lastChild,d.firstChild);b.hasCSS=!!c}g||t(a,b);return a}var k=l.html5||{},s=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$ i,r="/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,j,o="_html5shiv",h=0,n={},g;(function(){try{var" a="f.createElement("a");a.innerHTML="<xyz">";j="hidden"in a;var b;if(!(b=1==a.childNodes.length)){f.createElement("a");var c=f.createDocumentFragment();b="undefined"==typeof c.cloneNode||
-"undefined"==typeof c.createDocumentFragment||"undefined"==typeof c.createElement}g=b}catch(d){g=j=!0}})();var e={elements:k.elements||"abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup main mark meter nav output progress section summary time video",version:"3.6.2",shivCSS:!1!==k.shivCSS,supportsUnknownElements:g,shivMethods:!1!==k.shivMethods,type:"default",shivDocument:q,createElement:p,createDocumentFragment:function(a,b){a||(a=f);if(g)return a.createDocumentFragment();
-for(var b=b||i(a),c=b.frag.cloneNode(),d=0,e=m(),h=e.length;d</|^(?:button|map|select|textarea|object|iframe|option|optgroup)$>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/README-ZH-CN/" itemprop="url">
                   Unbenannt
                 </a>
@@ -4374,6 +4096,283 @@ for(var b=b||i(a),c=b.frag.cloneNode(),d=0,e=m(),h=e.length;d</|^(?:button|map|s
 <p>微博 (<a href="http://weibo.com/2292826740" target="_blank" rel="external">@<em>文翼</em></a>)</p>
 <p>邮件 (wenzhixin2010@gmail.com)</p>
 
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/demos/assets/bootstrap/js/bootstrap.min/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
+              2016-09-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/demos/assets/bootstrap/js/bootstrap.min/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/demos/assets/bootstrap/js/bootstrap.min/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            /*!
+ * Bootstrap v3.0.3 (http://getbootstrap.com)
+ * Copyright 2013 Twitter, Inc.
+ * Licensed under http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+if("undefined"==typeof jQuery)throw new Error("Bootstrap requires jQuery");+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]}}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one(a.support.transition.end,function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b()})}(jQuery),+function(a){"use strict";var b='[data-dismiss="alert"]',c=function(c){a(c).on("click",b,this.close)};c.prototype.close=function(b){function c(){f.trigger("closed.bs.alert").remove()}var d=a(this),e=d.attr("data-target");e||(e=d.attr("href"),e=e&&e.replace(/.*(?=#[^\s]*$)/,""));var f=a(e);b&&b.preventDefault(),f.length||(f=d.hasClass("alert")?d:d.parent()),f.trigger(b=a.Event("close.bs.alert")),b.isDefaultPrevented()||(f.removeClass("in"),a.support.transition&&f.hasClass("fade")?f.one(a.support.transition.end,c).emulateTransitionEnd(150):c())};var d=a.fn.alert;a.fn.alert=function(b){return this.each(function(){var d=a(this),e=d.data("bs.alert");e||d.data("bs.alert",e=new c(this)),"string"==typeof b&&e[b].call(d)})},a.fn.alert.Constructor=c,a.fn.alert.noConflict=function(){return a.fn.alert=d,this},a(document).on("click.bs.alert.data-api",b,c.prototype.close)}(jQuery),+function(a){"use strict";var b=function(c,d){this.$element=a(c),this.options=a.extend({},b.DEFAULTS,d)};b.DEFAULTS={loadingText:"loading..."},b.prototype.setState=function(a){var b="disabled",c=this.$element,d=c.is("input")?"val":"html",e=c.data();a+="Text",e.resetText||c.data("resetText",c[d]()),c[d](e[a]||this.options[a]),setTimeout(function(){"loadingText"==a?c.addClass(b).attr(b,b):c.removeClass(b).removeAttr(b)},0)},b.prototype.toggle=function(){var a=this.$element.closest('[data-toggle="buttons"]'),b=!0;if(a.length){var c=this.$element.find("input");"radio"===c.prop("type")&&(c.prop("checked")&&this.$element.hasClass("active")?b=!1:a.find(".active").removeClass("active")),b&&c.prop("checked",!this.$element.hasClass("active")).trigger("change")}b&&this.$element.toggleClass("active")};var c=a.fn.button;a.fn.button=function(c){return this.each(function(){var d=a(this),e=d.data("bs.button"),f="object"==typeof c&&c;e||d.data("bs.button",e=new b(this,f)),"toggle"==c?e.toggle():c&&e.setState(c)})},a.fn.button.Constructor=b,a.fn.button.noConflict=function(){return a.fn.button=c,this},a(document).on("click.bs.button.data-api","[data-toggle^=button]",function(b){var c=a(b.target);c.hasClass("btn")||(c=c.closest(".btn")),c.button("toggle"),b.preventDefault()})}(jQuery),+function(a){"use strict";var b=function(b,c){this.$element=a(b),this.$indicators=this.$element.find(".carousel-indicators"),this.options=c,this.paused=this.sliding=this.interval=this.$active=this.$items=null,"hover"==this.options.pause&&this.$element.on("mouseenter",a.proxy(this.pause,this)).on("mouseleave",a.proxy(this.cycle,this))};b.DEFAULTS={interval:5e3,pause:"hover",wrap:!0},b.prototype.cycle=function(b){return b||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(a.proxy(this.next,this),this.options.interval)),this},b.prototype.getActiveIndex=function(){return this.$active=this.$element.find(".item.active"),this.$items=this.$active.parent().children(),this.$items.index(this.$active)},b.prototype.to=function(b){var c=this,d=this.getActiveIndex();return b>this.$items.length-1||0>b?void 0:this.sliding?this.$element.one("slid.bs.carousel",function(){c.to(b)}):d==b?this.pause().cycle():this.slide(b>d?"next":"prev",a(this.$items[b]))},b.prototype.pause=function(b){return b||(this.paused=!0),this.$element.find(".next, .prev").length&&a.support.transition.end&&(this.$element.trigger(a.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},b.prototype.next=function(){return this.sliding?void 0:this.slide("next")},b.prototype.prev=function(){return this.sliding?void 0:this.slide("prev")},b.prototype.slide=function(b,c){var d=this.$element.find(".item.active"),e=c||d[b](),f=this.interval,g="next"==b?"left":"right",h="next"==b?"first":"last",i=this;if(!e.length){if(!this.options.wrap)return;e=this.$element.find(".item")[h]()}this.sliding=!0,f&&this.pause();var j=a.Event("slide.bs.carousel",{relatedTarget:e[0],direction:g});if(!e.hasClass("active")){if(this.$indicators.length&&(this.$indicators.find(".active").removeClass("active"),this.$element.one("slid.bs.carousel",function(){var b=a(i.$indicators.children()[i.getActiveIndex()]);b&&b.addClass("active")})),a.support.transition&&this.$element.hasClass("slide")){if(this.$element.trigger(j),j.isDefaultPrevented())return;e.addClass(b),e[0].offsetWidth,d.addClass(g),e.addClass(g),d.one(a.support.transition.end,function(){e.removeClass([b,g].join(" ")).addClass("active"),d.removeClass(["active",g].join(" ")),i.sliding=!1,setTimeout(function(){i.$element.trigger("slid.bs.carousel")},0)}).emulateTransitionEnd(600)}else{if(this.$element.trigger(j),j.isDefaultPrevented())return;d.removeClass("active"),e.addClass("active"),this.sliding=!1,this.$element.trigger("slid.bs.carousel")}return f&&this.cycle(),this}};var c=a.fn.carousel;a.fn.carousel=function(c){return this.each(function(){var d=a(this),e=d.data("bs.carousel"),f=a.extend({},b.DEFAULTS,d.data(),"object"==typeof c&&c),g="string"==typeof c?c:f.slide;e||d.data("bs.carousel",e=new b(this,f)),"number"==typeof c?e.to(c):g?e[g]():f.interval&&e.pause().cycle()})},a.fn.carousel.Constructor=b,a.fn.carousel.noConflict=function(){return a.fn.carousel=c,this},a(document).on("click.bs.carousel.data-api","[data-slide], [data-slide-to]",function(b){var c,d=a(this),e=a(d.attr("data-target")||(c=d.attr("href"))&&c.replace(/.*(?=#[^\s]+$)/,"")),f=a.extend({},e.data(),d.data()),g=d.attr("data-slide-to");g&&(f.interval=!1),e.carousel(f),(g=d.attr("data-slide-to"))&&e.data("bs.carousel").to(g),b.preventDefault()}),a(window).on("load",function(){a('[data-ride="carousel"]').each(function(){var b=a(this);b.carousel(b.data())})})}(jQuery),+function(a){"use strict";var b=function(c,d){this.$element=a(c),this.options=a.extend({},b.DEFAULTS,d),this.transitioning=null,this.options.parent&&(this.$parent=a(this.options.parent)),this.options.toggle&&this.toggle()};b.DEFAULTS={toggle:!0},b.prototype.dimension=function(){var a=this.$element.hasClass("width");return a?"width":"height"},b.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var b=a.Event("show.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.$parent&&this.$parent.find("> .panel > .in");if(c&&c.length){var d=c.data("bs.collapse");if(d&&d.transitioning)return;c.collapse("hide"),d||c.data("bs.collapse",null)}var e=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[e](0),this.transitioning=1;var f=function(){this.$element.removeClass("collapsing").addClass("in")[e]("auto"),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return f.call(this);var g=a.camelCase(["scroll",e].join("-"));this.$element.one(a.support.transition.end,a.proxy(f,this)).emulateTransitionEnd(350)[e](this.$element[0][g])}}},b.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var b=a.Event("hide.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.dimension();this.$element[c](this.$element[c]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse").removeClass("in"),this.transitioning=1;var d=function(){this.transitioning=0,this.$element.trigger("hidden.bs.collapse").removeClass("collapsing").addClass("collapse")};return a.support.transition?(this.$element[c](0).one(a.support.transition.end,a.proxy(d,this)).emulateTransitionEnd(350),void 0):d.call(this)}}},b.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()};var c=a.fn.collapse;a.fn.collapse=function(c){return this.each(function(){var d=a(this),e=d.data("bs.collapse"),f=a.extend({},b.DEFAULTS,d.data(),"object"==typeof c&&c);e||d.data("bs.collapse",e=new b(this,f)),"string"==typeof c&&e[c]()})},a.fn.collapse.Constructor=b,a.fn.collapse.noConflict=function(){return a.fn.collapse=c,this},a(document).on("click.bs.collapse.data-api","[data-toggle=collapse]",function(b){var c,d=a(this),e=d.attr("data-target")||b.preventDefault()||(c=d.attr("href"))&&c.replace(/.*(?=#[^\s]+$)/,""),f=a(e),g=f.data("bs.collapse"),h=g?"toggle":d.data(),i=d.attr("data-parent"),j=i&&a(i);g&&g.transitioning||(j&&j.find('[data-toggle=collapse][data-parent="'+i+'"]').not(d).addClass("collapsed"),d[f.hasClass("in")?"addClass":"removeClass"]("collapsed")),f.collapse(h)})}(jQuery),+function(a){"use strict";function b(){a(d).remove(),a(e).each(function(b){var d=c(a(this));d.hasClass("open")&&(d.trigger(b=a.Event("hide.bs.dropdown")),b.isDefaultPrevented()||d.removeClass("open").trigger("hidden.bs.dropdown"))})}function c(b){var c=b.attr("data-target");c||(c=b.attr("href"),c=c&&/#/.test(c)&&c.replace(/.*(?=#[^\s]*$)/,""));var d=c&&a(c);return d&&d.length?d:b.parent()}var d=".dropdown-backdrop",e="[data-toggle=dropdown]",f=function(b){a(b).on("click.bs.dropdown",this.toggle)};f.prototype.toggle=function(d){var e=a(this);if(!e.is(".disabled, :disabled")){var f=c(e),g=f.hasClass("open");if(b(),!g){if("ontouchstart"in document.documentElement&&!f.closest(".navbar-nav").length&&a('<div class="dropdown-backdrop">').insertAfter(a(this)).on("click",b),f.trigger(d=a.Event("show.bs.dropdown")),d.isDefaultPrevented())return;f.toggleClass("open").trigger("shown.bs.dropdown"),e.focus()}return!1}},f.prototype.keydown=function(b){if(/(38|40|27)/.test(b.keyCode)){var d=a(this);if(b.preventDefault(),b.stopPropagation(),!d.is(".disabled, :disabled")){var f=c(d),g=f.hasClass("open");if(!g||g&&27==b.keyCode)return 27==b.which&&f.find(e).focus(),d.click();var h=a("[role=menu] li:not(.divider):visible a",f);if(h.length){var i=h.index(h.filter(":focus"));38==b.keyCode&&i>0&&i--,40==b.keyCode&&i<h.length-1&&i++,~i||(i=0),h.eq(i).focus()}}}};var g="a.fn.dropdown;a.fn.dropdown=function(b){return" this.each(function(){var="" c="a(this),d=c.data("bs.dropdown");d||c.data("bs.dropdown",d=new" f(this)),"string"="=typeof" b&&d[b].call(c)})},a.fn.dropdown.constructor="f,a.fn.dropdown.noConflict=function(){return" a.fn.dropdown="g,this},a(document).on("click.bs.dropdown.data-api",b).on("click.bs.dropdown.data-api",".dropdown" form",function(a){a.stoppropagation()}).on("click.bs.dropdown.data-api",e,f.prototype.toggle).on("keydown.bs.dropdown.data-api",e+",="" [role="menu]",f.prototype.keydown)}(jQuery),+function(a){"use" strict";var="" b="function(b,c){this.options=c,this.$element=a(b),this.$backdrop=this.isShown=null,this.options.remote&&this.$element.load(this.options.remote)};b.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},b.prototype.toggle=function(a){return" this[this.isshown?"hide":"show"](a)},b.prototype.show="function(b){var" d="a.support.transition&&c.$element.hasClass("fade");c.$element.parent().length||c.$element.appendTo(document.body),c.$element.show(),d&&c.$element[0].offsetWidth,c.$element.addClass("in").attr("aria-hidden",!1),c.enforceFocus();var" e="a.Event("shown.bs.modal",{relatedTarget:b});d?c.$element.find(".modal-dialog").one(a.support.transition.end,function(){c.$element.focus().trigger(e)}).emulateTransitionEnd(300):c.$element.focus().trigger(e)}))},b.prototype.hide=function(b){b&&b.preventDefault(),b=a.Event("hide.bs.modal"),this.$element.trigger(b),this.isShown&&!b.isDefaultPrevented()&&(this.isShown=!1,this.escape(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").attr("aria-hidden",!0).off("click.dismiss.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one(a.support.transition.end,a.proxy(this.hideModal,this)).emulateTransitionEnd(300):this.hideModal())},b.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(a){this.$element[0]===a.target||this.$element.has(a.target).length||this.$element.focus()},this))},b.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keyup.dismiss.bs.modal",a.proxy(function(a){27==a.which&&this.hide()},this)):this.isShown||this.$element.off("keyup.dismiss.bs.modal")},b.prototype.hideModal=function(){var" a="this;this.$element.hide(),this.backdrop(function(){a.removeBackdrop(),a.$element.trigger("hidden.bs.modal")})},b.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},b.prototype.backdrop=function(b){var" class="modal-backdrop '+c+'">').appendTo(document.body),this.$element.on("click.dismiss.modal",a.proxy(function(a){a.target===a.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus.call(this.$element[0]):this.hide.call(this))},this)),d&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!b)return;d?this.$backdrop.one(a.support.transition.end,b).emulateTransitionEnd(150):b()}else!this.isShown&&this.$backdrop?(this.$backdrop.removeClass("in"),a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one(a.support.transition.end,b).emulateTransitionEnd(150):b()):b&&b()};var c=a.fn.modal;a.fn.modal=function(c,d){return this.each(function(){var e=a(this),f=e.data("bs.modal"),g=a.extend({},b.DEFAULTS,e.data(),"object"==typeof c&&c);f||e.data("bs.modal",f=new b(this,g)),"string"==typeof c?f[c](d):g.show&&f.show(d)})},a.fn.modal.Constructor=b,a.fn.modal.noConflict=function(){return a.fn.modal=c,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(b){var c=a(this),d=c.attr("href"),e=a(c.attr("data-target")||d&&d.replace(/.*(?=#[^\s]+$)/,"")),f=e.data("modal")?"toggle":a.extend({remote:!/#/.test(d)&&d},e.data(),c.data());b.preventDefault(),e.modal(f,this).one("hide",function(){c.is(":visible")&&c.focus()})}),a(document).on("show.bs.modal",".modal",function(){a(document.body).addClass("modal-open")}).on("hidden.bs.modal",".modal",function(){a(document.body).removeClass("modal-open")})}(jQuery),+function(a){"use strict";var b=function(a,b){this.type=this.options=this.enabled=this.timeout=this.hoverState=this.$element=null,this.init("tooltip",a,b)};b.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1},b.prototype.init=function(b,c,d){this.enabled=!0,this.type=b,this.$element=a(c),this.options=this.getOptions(d);for(var e=this.options.trigger.split(" "),f=e.length;f--;){var g=e[f];if("click"==g)this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this));else if("manual"!=g){var h="hover"==g?"mouseenter":"focus",i="hover"==g?"mouseleave":"blur";this.$element.on(h+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(i+"."+this.type,this.options.selector,a.proxy(this.leave,this))}}this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},b.prototype.getDefaults=function(){return b.DEFAULTS},b.prototype.getOptions=function(b){return b=a.extend({},this.getDefaults(),this.$element.data(),b),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},b.prototype.getDelegateOptions=function(){var b={},c=this.getDefaults();return this._options&&a.each(this._options,function(a,d){c[a]!=d&&(b[a]=d)}),b},b.prototype.enter=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget)[this.type](this.getDelegateOptions()).data("bs."+this.type);return clearTimeout(c.timeout),c.hoverState="in",c.options.delay&&c.options.delay.show?(c.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show),void 0):c.show()},b.prototype.leave=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget)[this.type](this.getDelegateOptions()).data("bs."+this.type);return clearTimeout(c.timeout),c.hoverState="out",c.options.delay&&c.options.delay.hide?(c.timeout=setTimeout(function(){"out"==c.hoverState&&c.hide()},c.options.delay.hide),void 0):c.hide()},b.prototype.show=function(){var b=a.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){if(this.$element.trigger(b),b.isDefaultPrevented())return;var c=this.tip();this.setContent(),this.options.animation&&c.addClass("fade");var d="function"==typeof this.options.placement?this.options.placement.call(this,c[0],this.$element[0]):this.options.placement,e=/\s?auto?\s?/i,f=e.test(d);f&&(d=d.replace(e,"")||"top"),c.detach().css({top:0,left:0,display:"block"}).addClass(d),this.options.container?c.appendTo(this.options.container):c.insertAfter(this.$element);var g=this.getPosition(),h=c[0].offsetWidth,i=c[0].offsetHeight;if(f){var j=this.$element.parent(),k=d,l=document.documentElement.scrollTop||document.body.scrollTop,m="body"==this.options.container?window.innerWidth:j.outerWidth(),n="body"==this.options.container?window.innerHeight:j.outerHeight(),o="body"==this.options.container?0:j.offset().left;d="bottom"==d&&g.top+g.height+i-l>n?"top":"top"==d&&g.top-l-i<0?"bottom":"right"==d&&g.right+h>m?"left":"left"==d&&g.left-h<o?"right":d,c.removeclass(k).addclass(d)}var p="this.getCalculatedOffset(d,g,h,i);this.applyPlacement(p,d),this.$element.trigger("shown.bs."+this.type)}},b.prototype.applyPlacement=function(a,b){var" c,d="this.tip(),e=d[0].offsetWidth,f=d[0].offsetHeight,g=parseInt(d.css("margin-top"),10),h=parseInt(d.css("margin-left"),10);isNaN(g)&&(g=0),isNaN(h)&&(h=0),a.top=a.top+g,a.left=a.left+h,d.offset(a).addClass("in");var" i="d[0].offsetWidth,j=d[0].offsetHeight;if("top"==b&&j!=f&&(c=!0,a.top=a.top+f-j),/bottom|top/.test(b)){var" k="0;a.left<0&&(k=-2*a.left,a.left=0,d.offset(a),i=d[0].offsetWidth,j=d[0].offsetHeight),this.replaceArrow(k-e+i,i,"left")}else" this.replacearrow(j-f,j,"top");c&&d.offset(a)},b.prototype.replacearrow="function(a,b,c){this.arrow().css(c,a?50*(1-a/b)+"%":"")},b.prototype.setContent=function(){var" a="this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade" in="" top="" bottom="" left="" right")},b.prototype.hide="function(){function" b(){"in"!="c.hoverState&&d.detach()}var" c="this,d=this.tip(),e=a.Event("hide.bs."+this.type);return" this.$element.trigger(e),e.isdefaultprevented()?void="" 0:(d.removeclass("in"),a.support.transition&&this.$tip.hasclass("fade")?d.one(a.support.transition.end,b).emulatetransitionend(150):b(),this.$element.trigger("hidden.bs."+this.type),this)},b.prototype.fixtitle="function(){var" a.attr("data-original-title"))&&a.attr("data-original-title",a.attr("title")||"").attr("title","")},b.prototype.hascontent="function(){return" this.gettitle()},b.prototype.getposition="function(){var" b="this.$element[0];return" a.extend({},"function"="=typeof" b.getboundingclientrect?b.getboundingclientrect():{width:b.offsetwidth,height:b.offsetheight},this.$element.offset())},b.prototype.getcalculatedoffset="function(a,b,c,d){return"bottom"==a?{top:b.top+b.height,left:b.left+b.width/2-c/2}:"top"==a?{top:b.top-d,left:b.left+b.width/2-c/2}:"left"==a?{top:b.top+b.height/2-d/2,left:b.left-c}:{top:b.top+b.height/2-d/2,left:b.left+b.width}},b.prototype.getTitle=function(){var" a,b="this.$element,c=this.options;return" c.title?c.title.call(b[0]):c.title)},b.prototype.tip="function(){return" this.$tip="this.$tip||a(this.options.template)},b.prototype.arrow=function(){return" this.$arrow="this.$arrow||this.tip().find(".tooltip-arrow")},b.prototype.validate=function(){this.$element[0].parentNode||(this.hide(),this.$element=null,this.options=null)},b.prototype.enable=function(){this.enabled=!0},b.prototype.disable=function(){this.enabled=!1},b.prototype.toggleEnabled=function(){this.enabled=!this.enabled},b.prototype.toggle=function(b){var" this.each(function(){var="" d="a(this),e=d.data("bs.tooltip"),f="object"==typeof" c&&c;e||d.data("bs.tooltip",e="new" b(this,f)),"string"="=typeof" c&&e[c]()})},a.fn.tooltip.constructor="b,a.fn.tooltip.noConflict=function(){return" a.fn.tooltip="c,this}}(jQuery),+function(a){"use" strict";var="" new="" error("popover="" requires="" tooltip.js");b.defaults="a.extend({},a.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div" class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></o?"right":d,c.removeclass(k).addclass(d)}var></0?"bottom":"right"==d&&g.right+h></h.length-1&&i++,~i||(i=0),h.eq(i).focus()}}}};var></div>'}),b.prototype=a.extend({},a.fn.tooltip.Constructor.prototype),b.prototype.constructor=b,b.prototype.getDefaults=function(){return b.DEFAULTS},b.prototype.setContent=function(){var a=this.tip(),b=this.getTitle(),c=this.getContent();a.find(".popover-title")[this.options.html?"html":"text"](b),a.find(".popover-content")[this.options.html?"html":"text"](c),a.removeClass("fade top bottom left right in"),a.find(".popover-title").html()||a.find(".popover-title").hide()},b.prototype.hasContent=function(){return this.getTitle()||this.getContent()},b.prototype.getContent=function(){var a=this.$element,b=this.options;return a.attr("data-content")||("function"==typeof b.content?b.content.call(a[0]):b.content)},b.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")},b.prototype.tip=function(){return this.$tip||(this.$tip=a(this.options.template)),this.$tip};var c=a.fn.popover;a.fn.popover=function(c){return this.each(function(){var d=a(this),e=d.data("bs.popover"),f="object"==typeof c&&c;e||d.data("bs.popover",e=new b(this,f)),"string"==typeof c&&e[c]()})},a.fn.popover.Constructor=b,a.fn.popover.noConflict=function(){return a.fn.popover=c,this}}(jQuery),+function(a){"use strict";function b(c,d){var e,f=a.proxy(this.process,this);this.$element=a(c).is("body")?a(window):a(c),this.$body=a("body"),this.$scrollElement=this.$element.on("scroll.bs.scroll-spy.data-api",f),this.options=a.extend({},b.DEFAULTS,d),this.selector=(this.options.target||(e=a(c).attr("href"))&&e.replace(/.*(?=#[^\s]+$)/,"")||"")+" .nav li > a",this.offsets=a([]),this.targets=a([]),this.activeTarget=null,this.refresh(),this.process()}b.DEFAULTS={offset:10},b.prototype.refresh=function(){var b=this.$element[0]==window?"offset":"position";this.offsets=a([]),this.targets=a([]);var c=this;this.$body.find(this.selector).map(function(){var d=a(this),e=d.data("target")||d.attr("href"),f=/^#\w/.test(e)&&a(e);return f&&f.length&&[[f[b]().top+(!a.isWindow(c.$scrollElement.get(0))&&c.$scrollElement.scrollTop()),e]]||null}).sort(function(a,b){return a[0]-b[0]}).each(function(){c.offsets.push(this[0]),c.targets.push(this[1])})},b.prototype.process=function(){var a,b=this.$scrollElement.scrollTop()+this.options.offset,c=this.$scrollElement[0].scrollHeight||this.$body[0].scrollHeight,d=c-this.$scrollElement.height(),e=this.offsets,f=this.targets,g=this.activeTarget;if(b>=d)return g!=(a=f.last()[0])&&this.activate(a);for(a=e.length;a--;)g!=f[a]&&b>=e[a]&&(!e[a+1]||b<=e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activetarget=b,a(this.selector).parents(".active").removeclass("active");var c="this.selector+'[data-target="'+b+'"],'+this.selector+'[href="'+b+'"]',d=a(c).parents("li").addClass("active");d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active")),d.trigger("activate.bs.scrollspy")};var" this.each(function(){var="" d="a(this),e=d.data("bs.scrollspy"),f="object"==typeof" c&&c;e||d.data("bs.scrollspy",e="new" b(this,f)),"string"="=typeof" c&&e[c]()})},a.fn.scrollspy.constructor="b,a.fn.scrollspy.noConflict=function(){return" a.fn.scrollspy="c,this},a(window).on("load",function(){a('[data-spy="scroll"]').each(function(){var" b="a(this);b.scrollspy(b.data())})})}(jQuery),+function(a){"use" strict";var="" e="c.find(".active:last" a")[0],f="a.Event("show.bs.tab",{relatedTarget:e});if(b.trigger(f),!f.isDefaultPrevented()){var" g="a(d);this.activate(b.parent("li"),c),this.activate(g,g.parent(),function(){b.trigger({type:"shown.bs.tab",relatedTarget:e})})}}},b.prototype.activate=function(b,c,d){function" e(){f.removeclass("active").find("=""> .dropdown-menu > .active").removeClass("active"),b.addClass("active"),g?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu")&&b.closest("li.dropdown").addClass("active"),d&&d()}var f=c.find("> .active"),g=d&&a.support.transition&&f.hasClass("fade");g?f.one(a.support.transition.end,e).emulateTransitionEnd(150):e(),f.removeClass("in")};var c=a.fn.tab;a.fn.tab=function(c){return this.each(function(){var d=a(this),e=d.data("bs.tab");e||d.data("bs.tab",e=new b(this)),"string"==typeof c&&e[c]()})},a.fn.tab.Constructor=b,a.fn.tab.noConflict=function(){return a.fn.tab=c,this},a(document).on("click.bs.tab.data-api",'[data-toggle="tab"], [data-toggle="pill"]',function(b){b.preventDefault(),a(this).tab("show")})}(jQuery),+function(a){"use strict";var b=function(c,d){this.options=a.extend({},b.DEFAULTS,d),this.$window=a(window).on("scroll.bs.affix.data-api",a.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",a.proxy(this.checkPositionWithEventLoop,this)),this.$element=a(c),this.affixed=this.unpin=null,this.checkPosition()};b.RESET="affix affix-top affix-bottom",b.DEFAULTS={offset:0},b.prototype.checkPositionWithEventLoop=function(){setTimeout(a.proxy(this.checkPosition,this),1)},b.prototype.checkPosition=function(){if(this.$element.is(":visible")){var c=a(document).height(),d=this.$window.scrollTop(),e=this.$element.offset(),f=this.options.offset,g=f.top,h=f.bottom;"object"!=typeof f&&(h=g=f),"function"==typeof g&&(g=f.top()),"function"==typeof h&&(h=f.bottom());var i=null!=this.unpin&&d+this.unpin<=e.top?!1:null!=h&&e.top+this.$element.height()>=c-h?"bottom":null!=g&&g>=d?"top":!1;this.affixed!==i&&(this.unpin&&this.$element.css("top",""),this.affixed=i,this.unpin="bottom"==i?e.top-d:null,this.$element.removeClass(b.RESET).addClass("affix"+(i?"-"+i:"")),"bottom"==i&&this.$element.offset({top:document.body.offsetHeight-h-this.$element.height()}))}};var c=a.fn.affix;a.fn.affix=function(c){return this.each(function(){var d=a(this),e=d.data("bs.affix"),f="object"==typeof c&&c;e||d.data("bs.affix",e=new b(this,f)),"string"==typeof c&&e[c]()})},a.fn.affix.Constructor=b,a.fn.affix.noConflict=function(){return a.fn.affix=c,this},a(window).on("load",function(){a('[data-spy="affix"]').each(function(){var b=a(this),c=b.data();c.offset=c.offset||{},c.offsetBottom&&(c.offset.bottom=c.offsetBottom),c.offsetTop&&(c.offset.top=c.offsetTop),b.affix(c)})})}(jQuery);</=e.top?!1:null!=h&&e.top+this.$element.height()></=e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activetarget=b,a(this.selector).parents(".active").removeclass("active");var>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-09-14T10:57:48+08:00" content="2016-09-14">
+              2016-09-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/index/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Multiple Select</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+  <meta content="Multiple Select" property="og:title">
+  <meta content="Multiple select is a jQuery plugin to select multiple elements with checkboxes :)." name="description">
+  
+  <!-- css -->
+  <link rel="stylesheet" href="css/base.css">
+
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/es5-shim.min.js"></script>
+  <!-- Flatdoc -->
+  <script src="assets/flatdoc/legacy.js"></script>
+  <script src="assets/flatdoc/flatdoc.js"></script>
+
+  <!-- Flatdoc theme -->
+  <link href="assets/flatdoc/theme-white/style.css" rel="stylesheet">
+  <script src="assets/flatdoc/theme-white/script.js"></script>
+
+  <!-- Multiple Select -->
+  <link href="../multiple-select.css" rel="stylesheet">
+  <script src="../multiple-select.js"></script>
+  
+  <!--[if lt IE 9]>
+    <script src="assets/html5shiv.js"></script>
+    <script src="assets/respond.min.js"></script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    if (window!=top) // 判断当前的window对象是否是top对象
+      top.location.href = window.location.href; // 如果不是，将top对象的网址自动导向被嵌入网页的网址
+  </script>
+
+  <!-- js -->
+  <script src="js/index.js"></script>
+</head>
+<body role="flatdoc">
+  <div class="header">
+    <div class="left">
+      <h1>Multiple Select</h1>
+      <ul>
+        <li><a href="https://github.com/wenzhixin/multiple-select" target="_blank" rel="external">View on GitHub</a></li>
+        <li><a href="https://github.com/wenzhixin/multiple-select/issues" target="_blank" rel="external">Issues</a></li>
+        <li><a href="index.html">English</a></li>
+        <li><a href="index.html?locale=zh_CN">Chinese</a></li>
+      </ul>
+    </div>
+    <div class="right">
+      <!-- GitHub buttons: see http://ghbtns.com -->
+        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&repo=multiple-select&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&repo=multiple-select&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+        <iframe src="http://ghbtns.com/github-btn.html?user=wenzhixin&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="175" height="20"></iframe>
+    </div>
+  </div>
+
+  <div class="content-root">
+    <div class="menubar">
+      <div class="section">
+        <a class="big button" href="https://github.com/wenzhixin/multiple-select" target="_blank">Download</a>
+      </div>
+      <div class="menu section" role="flatdoc-menu"></div>
+    </div>
+    <div role="flatdoc-content" class="content"></div>
+  </div>
+
+  <script src="//wenzhixin.net.cn/js/analytics.js"></script>
+</body>
+</html>
           
         
       
