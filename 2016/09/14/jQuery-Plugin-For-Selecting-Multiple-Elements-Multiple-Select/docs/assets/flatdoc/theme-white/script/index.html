@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(function($) {
+  var $window = $(window);
+  var $document = $(document);
+
+ /*
+  * Scrollspy.
+  */
+
+ $document.on(&apos;flatdoc:ready&apos;, function() {
+    $(&quot;h2, h3&quot;).scrollagent(function(cid, pid, currentEle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/script/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="(function($) {
+  var $window = $(window);
+  var $document = $(document);
+
+ /*
+  * Scrollspy.
+  */
+
+ $document.on(&apos;flatdoc:ready&apos;, function() {
+    $(&quot;h2, h3&quot;).scrollagent(function(cid, pid, currentEle">
+<meta property="og:updated_time" content="2016-01-03T03:45:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="(function($) {
+  var $window = $(window);
+  var $document = $(document);
+
+ /*
+  * Scrollspy.
+  */
+
+ $document.on(&apos;flatdoc:ready&apos;, function() {
+    $(&quot;h2, h3&quot;).scrollagent(function(cid, pid, currentEle">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/script" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/script/" class="article-date">
+  <time datetime="2016-09-14T02:57:48.815Z" itemprop="datePublished">2016-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        (function($) {
+  var $window = $(window);
+  var $document = $(document);
+
+ /*
+  * Scrollspy.
+  */
+
+ $document.on('flatdoc:ready', function() {
+    $("h2, h3").scrollagent(function(cid, pid, currentElement, previousElement) {
+      if (pid) {
+       $("[href='#"+pid+"']").removeClass('active');
+      }
+      if (cid) {
+       $("[href='#"+cid+"']").addClass('active');
+      }
+    });
+  });
+
+ /*
+  * Anchor jump links.
+  */
+
+ $document.on('flatdoc:ready', function() {
+   $('.menu a').anchorjump();
+ });
+
+ /*
+  * Title card.
+  */
+
+  $(function() {
+    var $card = $('.title-card');
+    if (!$card.length) return;
+
+    var $header = $('.header');
+    var headerHeight = $header.length ? $header.outerHeight() : 0;
+
+    $window
+      .on('resize.title-card', function() {
+        var windowWidth = $window.width();
+
+        if (windowWidth < 480) {
+          $card.css('height', '');
+        } else {
+          var height = $window.height();
+          $card.css('height', height - headerHeight);
+        }
+      })
+      .trigger('resize.title-card');
+
+    $card.fillsize('> img.bg');
+  });
+
+  /*
+   * Sidebar stick.
+   */
+
+  $(function() {
+    var $sidebar = $('.menubar');
+    var elTop;
+
+    $window
+      .on('resize.sidestick', function() {
+        elTop = $sidebar.offset().top;
+        $window.trigger('scroll.sidestick');
+      })
+      .on('scroll.sidestick', function() {
+        var scrollY = $window.scrollTop();
+        $sidebar.toggleClass('fixed', (scrollY >= elTop));
+      })
+      .trigger('resize.sidestick');
+  });
+
+})(jQuery);
+/*! jQuery.scrollagent (c) 2012, Rico Sta. Cruz. MIT License.
+ *  https://github.com/rstacruz/jquery-stuff/tree/master/scrollagent */
+
+// Call $(...).scrollagent() with a callback function.
+//
+// The callback will be called everytime the focus changes.
+//
+// Example:
+//
+//      $("h2").scrollagent(function(cid, pid, currentElement, previousElement) {
+//        if (pid) {
+//          $("[href='#"+pid+"']").removeClass('active');
+//        }
+//        if (cid) {
+//          $("[href='#"+cid+"']").addClass('active');
+//        }
+//      });
+
+(function($) {
+
+  $.fn.scrollagent = function(options, callback) {
+    // Account for $.scrollspy(function)
+    if (typeof callback === 'undefined') {
+      callback = options;
+      options = {};
+    }
+
+    var $sections = $(this);
+    var $parent = options.parent || $(window);
+
+    // Find the top offsets of each section
+    var offsets = [];
+    $sections.each(function(i) {
+      var offset = $(this).attr('data-anchor-offset') ?
+        parseInt($(this).attr('data-anchor-offset'), 10) :
+        (options.offset || 0);
+
+      offsets.push({
+        top: $(this).offset().top + offset,
+        id: $(this).attr('id'),
+        index: i,
+        el: this
+      });
+    });
+
+    // State
+    var current = null;
+    var height = null;
+    var range = null;
+
+    // Save the height. Do this only whenever the window is resized so we don't
+    // recalculate often.
+    $(window).on('resize', function() {
+      height = $parent.height();
+      range = $(document).height();
+    });
+
+    // Find the current active section every scroll tick.
+    $parent.on('scroll', function() {
+      var y = $parent.scrollTop();
+      y += height * (0.3 + 0.7 * Math.pow(y/range, 2));
+
+      var latest = null;
+
+      for (var i in offsets) {
+        if (offsets.hasOwnProperty(i)) {
+          var offset = offsets[i];
+          if (offset.top < y) latest = offset;
+        }
+      }
+
+      if (latest && (!current || (latest.index !== current.index))) {
+        callback.call($sections,
+          latest ? latest.id : null,
+          current ? current.id : null,
+          latest ? latest.el : null,
+          current ? current.el : null);
+        current = latest;
+      }
+    });
+
+    $(window).trigger('resize');
+    $parent.trigger('scroll');
+
+    return this;
+  };
+
+})(jQuery);
+/*! Anchorjump (c) 2012, Rico Sta. Cruz. MIT License.
+ *   http://github.com/rstacruz/jquery-stuff/tree/master/anchorjump */
+
+// Makes anchor jumps happen with smooth scrolling.
+//
+//    $("#menu a").anchorjump();
+//    $("#menu a").anchorjump({ offset: -30 });
+//
+//    // Via delegate:
+//    $("#menu").anchorjump({ for: 'a', offset: -30 });
+//
+// You may specify a parent. This makes it scroll down to the parent.
+// Great for tabbed views.
+//
+//     $('#menu a').anchorjump({ parent: '.anchor' });
+//
+// You can jump to a given area.
+//
+//     $.anchorjump('#bank-deposit', options);
+
+(function($) {
+  var defaults = {
+    'speed': 500,
+    'offset': 0,
+    'for': null,
+    'parent': null
+  };
+
+  $.fn.anchorjump = function(options) {
+    options = $.extend({}, defaults, options);
+
+    if (options['for']) {
+      this.on('click', options['for'], onClick);
+    } else {
+      this.on('click', onClick);
+    }
+
+    function onClick(e) {
+      var $a = $(e.target).closest('a');
+      if (e.ctrlKey || e.metaKey || e.altKey || $a.attr('target')) return;
+
+      e.preventDefault();
+      var href = $a.attr('href');
+
+      $.anchorjump(href, options);
+    }
+  };
+
+  // Jump to a given area.
+  $.anchorjump = function(href, options) {
+    options = $.extend({}, defaults, options);
+
+    var top = 0;
+
+    if (href != '#') {
+      var $area = $(href);
+      // Find the parent
+      if (options.parent) {
+        var $parent = $area.closest(options.parent);
+        if ($parent.length) { $area = $parent; }
+      }
+      if (!$area.length) { return; }
+
+      // Determine the pixel offset; use the default if not available
+      var offset =
+        $area.attr('data-anchor-offset') ?
+        parseInt($area.attr('data-anchor-offset'), 10) :
+        options.offset;
+
+      top = Math.max(0, $area.offset().top + offset);
+    }
+
+    $('html, body').animate({ scrollTop: top }, options.speed);
+    $('body').trigger('anchor', href);
+
+    // Add the location hash via pushState.
+    if (window.history.pushState) {
+      window.history.pushState({ href: href }, "", href);
+    }
+  };
+})(jQuery);
+/*! fillsize (c) 2012, Rico Sta. Cruz. MIT License.
+ *  http://github.com/rstacruz/jquery-stuff/tree/master/fillsize */
+
+// Makes an element fill up its container.
+//
+//     $(".container").fillsize("> img");
+//
+// This binds a listener on window resizing to automatically scale down the
+// child (`> img` in this example) just so that enough of it will be visible in
+// the viewport of the container.
+// 
+// This assumes that the container has `position: relative` (or any 'position',
+// really), and `overflow: hidden`.
+
+(function($) {
+  $.fn.fillsize = function(selector) {
+    var $parent = this;
+    var $img;
+
+    function resize() {
+      if (!$img) $img = $parent.find(selector);
+
+      $img.each(function() {
+        if (!this.complete) return;
+        var $img = $(this);
+
+        var parent = { height: $parent.innerHeight(), width: $parent.innerWidth() };
+        var imageRatio     = $img.width() / $img.height();
+        var containerRatio = parent.width / parent.height;
+
+        var css = {
+          position: 'absolute',
+          left: 0, top: 0, right: 'auto', bottom: 'auto'
+        };
+
+        // If image is wider than the container
+        if (imageRatio > containerRatio) {
+          css.left = Math.round((parent.width - imageRatio * parent.height) / 2) + 'px';
+          css.width = 'auto';
+          css.height = '100%';
+        }
+
+        // If the container is wider than the image
+        else {
+          css.top = Math.round((parent.height - (parent.width / $img.width() * $img.height())) / 2) + 'px';
+          css.height = 'auto';
+          css.width = '100%';
+        }
+
+        $img.css(css);
+      });
+    }
+
+    // Make it happen on window resize.
+    $(window).resize(resize);
+
+    // Allow manual invocation by doing `.trigger('fillsize')` on the container.
+    $(document).on('fillsize', $parent.selector, resize);
+
+    // Resize on first load (or immediately if called after).
+    $(function() {
+      // If the child is an image, fill it up when image's real dimensions are
+      // first determined. Needs to be .bind() because the load event will
+      // bubble up.
+      $(selector, $parent).bind('load', function() {
+        setTimeout(resize, 25);
+      });
+
+      resize();
+    });
+
+    return this;
+  };
+})(jQuery);
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/script/" data-id="cit2bzasn000xdwul9q9btmgv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/css/base/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/装逼界/">装逼界</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/装逼界/" style="font-size: 10px;">装逼界</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/14/index/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/css/base/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/script/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/theme-white/style/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/14/jQuery-Plugin-For-Selecting-Multiple-Elements-Multiple-Select/docs/assets/flatdoc/flatdoc/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
